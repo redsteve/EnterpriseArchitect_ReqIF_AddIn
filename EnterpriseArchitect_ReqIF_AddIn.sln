@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.0.0.7070
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EA_ReqIF_AddIn", "EA_ReqIF_AddIn\EA_ReqIF_AddIn.csproj", "{A99535D3-524F-4F3C-A690-A42418490C67}"
+EndProject
+Project("{CFEE4113-1246-4D54-95CB-156813CB8593}") = "EA_ReqIF_AddIn_Setup", "EA_ReqIF_AddIn_Setup\EA_ReqIF_AddIn_Setup.wixproj", "{1A1D3F2E-D30A-4BF3-9927-A4DFC9E8A6CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A99535D3-524F-4F3C-A690-A42418490C67}.Debug|x86.Build.0 = Debug|x86
+		{A99535D3-524F-4F3C-A690-A42418490C67}.Debug|x86.ActiveCfg = Debug|x86
+		{A99535D3-524F-4F3C-A690-A42418490C67}.Release|x86.Build.0 = Release|x86
+		{A99535D3-524F-4F3C-A690-A42418490C67}.Release|x86.ActiveCfg = Release|x86
+		{1A1D3F2E-D30A-4BF3-9927-A4DFC9E8A6CB}.Debug|x86.Build.0 = Debug|x86
+		{1A1D3F2E-D30A-4BF3-9927-A4DFC9E8A6CB}.Debug|x86.ActiveCfg = Debug|x86
+		{1A1D3F2E-D30A-4BF3-9927-A4DFC9E8A6CB}.Release|x86.Build.0 = Release|x86
+		{1A1D3F2E-D30A-4BF3-9927-A4DFC9E8A6CB}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+EndGlobal
