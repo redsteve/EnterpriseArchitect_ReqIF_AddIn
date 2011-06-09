@@ -26,6 +26,17 @@ namespace EA_ReqIF_AddIn
 			xmlReader = XmlReader.Create(filename, settings);
 		}
 
+		public void parse(IReqIfParserCallbackReceiver callbackReceiver)
+		{
+			if (xmlReader != null)
+			{
+				while (xmlReader.Read())
+				{
+					System.Console.WriteLine(xmlReader.Name);
+				}
+			}
+		}
+		
 		private void checkFilenameArgument(ref String filename)
 		{
 			if (filename == null) {

@@ -36,86 +36,105 @@ namespace EA_ReqIF_AddIn
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.Label label1;
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.Label label2;
+			System.Windows.Forms.GroupBox groupBox1;
+			this.mergeRequirementsRadioButton = new System.Windows.Forms.RadioButton();
 			this.importRequirementsRadioButton = new System.Windows.Forms.RadioButton();
 			this.exportRequirementsRadioButton = new System.Windows.Forms.RadioButton();
 			this.pathFileTextBox = new System.Windows.Forms.TextBox();
 			this.fileDialogButton = new System.Windows.Forms.Button();
 			this.startButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
-			label1 = new System.Windows.Forms.Label();
+			this.pathFileTextBoxErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			label2 = new System.Windows.Forms.Label();
+			groupBox1 = new System.Windows.Forms.GroupBox();
+			groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pathFileTextBoxErrorProvider)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// label1
-			// 
-			label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label1.Location = new System.Drawing.Point(12, 9);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(407, 17);
-			label1.TabIndex = 0;
-			label1.Text = "Specify whether you would like to import or export requirements.";
 			// 
 			// label2
 			// 
-			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label2.Location = new System.Drawing.Point(12, 62);
+			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			label2.Location = new System.Drawing.Point(12, 147);
 			label2.Name = "label2";
 			label2.Size = new System.Drawing.Size(407, 16);
-			label2.TabIndex = 3;
-			label2.Text = "Specify the path and the name of the ReqIF file for im- resp. export.";
+			label2.TabIndex = 4;
+			label2.Text = "Specify the path and the name of the ReqIF file:";
+			// 
+			// groupBox1
+			// 
+			groupBox1.Controls.Add(this.mergeRequirementsRadioButton);
+			groupBox1.Controls.Add(this.importRequirementsRadioButton);
+			groupBox1.Controls.Add(this.exportRequirementsRadioButton);
+			groupBox1.Location = new System.Drawing.Point(12, 12);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Size = new System.Drawing.Size(410, 123);
+			groupBox1.TabIndex = 8;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "What would you like to do?";
+			// 
+			// mergeRequirementsRadioButton
+			// 
+			this.mergeRequirementsRadioButton.Location = new System.Drawing.Point(6, 51);
+			this.mergeRequirementsRadioButton.Name = "mergeRequirementsRadioButton";
+			this.mergeRequirementsRadioButton.Size = new System.Drawing.Size(394, 35);
+			this.mergeRequirementsRadioButton.TabIndex = 2;
+			this.mergeRequirementsRadioButton.Text = "Merge requirements from a ReqIF file and the current model (This mode provides fu" +
+			"nctionalities to solve conflicts).";
+			this.mergeRequirementsRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// importRequirementsRadioButton
 			// 
-			this.importRequirementsRadioButton.Location = new System.Drawing.Point(12, 29);
+			this.importRequirementsRadioButton.Checked = true;
+			this.importRequirementsRadioButton.Location = new System.Drawing.Point(6, 19);
 			this.importRequirementsRadioButton.Name = "importRequirementsRadioButton";
-			this.importRequirementsRadioButton.Size = new System.Drawing.Size(132, 24);
+			this.importRequirementsRadioButton.Size = new System.Drawing.Size(394, 26);
 			this.importRequirementsRadioButton.TabIndex = 1;
 			this.importRequirementsRadioButton.TabStop = true;
-			this.importRequirementsRadioButton.Text = "Import requirements.";
+			this.importRequirementsRadioButton.Text = "Initial import of requirements from a ReqIF file.";
 			this.importRequirementsRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// exportRequirementsRadioButton
 			// 
-			this.exportRequirementsRadioButton.Location = new System.Drawing.Point(150, 29);
+			this.exportRequirementsRadioButton.Location = new System.Drawing.Point(6, 92);
 			this.exportRequirementsRadioButton.Name = "exportRequirementsRadioButton";
-			this.exportRequirementsRadioButton.Size = new System.Drawing.Size(134, 24);
-			this.exportRequirementsRadioButton.TabIndex = 2;
-			this.exportRequirementsRadioButton.TabStop = true;
-			this.exportRequirementsRadioButton.Text = "Export requirements.";
+			this.exportRequirementsRadioButton.Size = new System.Drawing.Size(394, 24);
+			this.exportRequirementsRadioButton.TabIndex = 3;
+			this.exportRequirementsRadioButton.Text = "Export requirements from the model to a ReqIF file";
 			this.exportRequirementsRadioButton.UseVisualStyleBackColor = true;
 			// 
 			// pathFileTextBox
 			// 
-			this.pathFileTextBox.Location = new System.Drawing.Point(12, 83);
+			this.pathFileTextBox.Location = new System.Drawing.Point(12, 166);
 			this.pathFileTextBox.Name = "pathFileTextBox";
 			this.pathFileTextBox.Size = new System.Drawing.Size(360, 20);
-			this.pathFileTextBox.TabIndex = 4;
+			this.pathFileTextBox.TabIndex = 5;
+			this.pathFileTextBox.Validated += new System.EventHandler(this.OnValidatePathFileTextBox);
 			// 
 			// fileDialogButton
 			// 
-			this.fileDialogButton.Location = new System.Drawing.Point(378, 81);
+			this.fileDialogButton.Location = new System.Drawing.Point(382, 166);
 			this.fileDialogButton.Name = "fileDialogButton";
 			this.fileDialogButton.Size = new System.Drawing.Size(41, 21);
-			this.fileDialogButton.TabIndex = 5;
+			this.fileDialogButton.TabIndex = 6;
 			this.fileDialogButton.Text = "...";
 			this.fileDialogButton.UseVisualStyleBackColor = true;
 			this.fileDialogButton.Click += new System.EventHandler(this.OnFileDialogButtonClick);
 			// 
 			// startButton
 			// 
-			this.startButton.Location = new System.Drawing.Point(344, 121);
+			this.startButton.Location = new System.Drawing.Point(348, 204);
 			this.startButton.Name = "startButton";
 			this.startButton.Size = new System.Drawing.Size(75, 23);
-			this.startButton.TabIndex = 6;
+			this.startButton.TabIndex = 8;
 			this.startButton.Text = "Start";
 			this.startButton.UseVisualStyleBackColor = true;
 			this.startButton.Click += new System.EventHandler(this.OnStartButtonClick);
 			// 
 			// cancelButton
 			// 
-			this.cancelButton.Location = new System.Drawing.Point(263, 121);
+			this.cancelButton.Location = new System.Drawing.Point(267, 204);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 7;
@@ -123,27 +142,33 @@ namespace EA_ReqIF_AddIn
 			this.cancelButton.UseVisualStyleBackColor = true;
 			this.cancelButton.Click += new System.EventHandler(this.OnCancelButtonClick);
 			// 
-			// MainForm
+			// pathFileTextBoxErrorProvider
+			// 
+			this.pathFileTextBoxErrorProvider.ContainerControl = this;
+			// 
+			// ImportExportForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(434, 157);
+			this.ClientSize = new System.Drawing.Size(434, 240);
+			this.Controls.Add(groupBox1);
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.startButton);
 			this.Controls.Add(this.fileDialogButton);
 			this.Controls.Add(this.pathFileTextBox);
 			this.Controls.Add(label2);
-			this.Controls.Add(this.exportRequirementsRadioButton);
-			this.Controls.Add(this.importRequirementsRadioButton);
-			this.Controls.Add(label1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
-			this.Name = "MainForm";
+			this.Name = "ImportExportForm";
 			this.ShowInTaskbar = false;
 			this.Text = "ReqIF Import/Export Add-In";
+			groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pathFileTextBoxErrorProvider)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ErrorProvider pathFileTextBoxErrorProvider;
+		private System.Windows.Forms.RadioButton mergeRequirementsRadioButton;
 		private System.Windows.Forms.Button cancelButton;
 		private System.Windows.Forms.Button startButton;
 		private System.Windows.Forms.Button fileDialogButton;
