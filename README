@@ -1,3 +1,12 @@
-This small project is an Add-In for the modeling tool SparxSystems Enterprise Architect (EA). The goal ist to enable the EA to import requirements from a Requirements Interchange Format (ReqIF) file, resp. to export requirements to a ReqIF file. The Requirements Interchange Format is a standardized XML-based format for requirements interchange between organizations or tools.
+What is it?
+-----------
+
+This small project is an Add-In for the modeling tool SparxSystems
+Enterprise Architect (http://www.sparxsystems.de), in short: EA.
+It enables the EA to import requirements from a Requirements
+Interchange Format (ReqIF) file, resp. to export requirements to a
+ReqIF file. The Requirements Interchange Format is a standardized
+XML-based format (http://www.omg.org/spec/ReqIF/) for requirements
+interchange between organizations or tools.
 
 The Add-In is developed using C#/.NET and #develop (Sharp Develop).
