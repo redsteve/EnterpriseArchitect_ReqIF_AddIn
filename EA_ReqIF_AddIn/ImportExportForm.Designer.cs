@@ -47,6 +47,8 @@ namespace EA_ReqIF_AddIn
 			this.startButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.pathFileTextBoxErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.label1 = new System.Windows.Forms.Label();
+			this.selectedPackageTextBox = new System.Windows.Forms.TextBox();
 			label2 = new System.Windows.Forms.Label();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			groupBox1.SuspendLayout();
@@ -56,7 +58,7 @@ namespace EA_ReqIF_AddIn
 			// label2
 			// 
 			label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			label2.Location = new System.Drawing.Point(12, 147);
+			label2.Location = new System.Drawing.Point(12, 181);
 			label2.Name = "label2";
 			label2.Size = new System.Drawing.Size(407, 16);
 			label2.TabIndex = 4;
@@ -67,7 +69,7 @@ namespace EA_ReqIF_AddIn
 			groupBox1.Controls.Add(this.mergeRequirementsRadioButton);
 			groupBox1.Controls.Add(this.importRequirementsRadioButton);
 			groupBox1.Controls.Add(this.exportRequirementsRadioButton);
-			groupBox1.Location = new System.Drawing.Point(12, 12);
+			groupBox1.Location = new System.Drawing.Point(12, 55);
 			groupBox1.Name = "groupBox1";
 			groupBox1.Size = new System.Drawing.Size(410, 123);
 			groupBox1.TabIndex = 8;
@@ -76,7 +78,7 @@ namespace EA_ReqIF_AddIn
 			// 
 			// mergeRequirementsRadioButton
 			// 
-			this.mergeRequirementsRadioButton.Location = new System.Drawing.Point(6, 51);
+			this.mergeRequirementsRadioButton.Location = new System.Drawing.Point(12, 51);
 			this.mergeRequirementsRadioButton.Name = "mergeRequirementsRadioButton";
 			this.mergeRequirementsRadioButton.Size = new System.Drawing.Size(394, 35);
 			this.mergeRequirementsRadioButton.TabIndex = 2;
@@ -87,7 +89,7 @@ namespace EA_ReqIF_AddIn
 			// importRequirementsRadioButton
 			// 
 			this.importRequirementsRadioButton.Checked = true;
-			this.importRequirementsRadioButton.Location = new System.Drawing.Point(6, 19);
+			this.importRequirementsRadioButton.Location = new System.Drawing.Point(12, 19);
 			this.importRequirementsRadioButton.Name = "importRequirementsRadioButton";
 			this.importRequirementsRadioButton.Size = new System.Drawing.Size(394, 26);
 			this.importRequirementsRadioButton.TabIndex = 1;
@@ -97,7 +99,7 @@ namespace EA_ReqIF_AddIn
 			// 
 			// exportRequirementsRadioButton
 			// 
-			this.exportRequirementsRadioButton.Location = new System.Drawing.Point(6, 92);
+			this.exportRequirementsRadioButton.Location = new System.Drawing.Point(12, 92);
 			this.exportRequirementsRadioButton.Name = "exportRequirementsRadioButton";
 			this.exportRequirementsRadioButton.Size = new System.Drawing.Size(394, 24);
 			this.exportRequirementsRadioButton.TabIndex = 3;
@@ -106,15 +108,15 @@ namespace EA_ReqIF_AddIn
 			// 
 			// pathFileTextBox
 			// 
-			this.pathFileTextBox.Location = new System.Drawing.Point(12, 166);
+			this.pathFileTextBox.Location = new System.Drawing.Point(12, 200);
 			this.pathFileTextBox.Name = "pathFileTextBox";
-			this.pathFileTextBox.Size = new System.Drawing.Size(360, 20);
+			this.pathFileTextBox.Size = new System.Drawing.Size(345, 20);
 			this.pathFileTextBox.TabIndex = 5;
 			this.pathFileTextBox.Validated += new System.EventHandler(this.OnValidatePathFileTextBox);
 			// 
 			// fileDialogButton
 			// 
-			this.fileDialogButton.Location = new System.Drawing.Point(382, 166);
+			this.fileDialogButton.Location = new System.Drawing.Point(378, 200);
 			this.fileDialogButton.Name = "fileDialogButton";
 			this.fileDialogButton.Size = new System.Drawing.Size(41, 21);
 			this.fileDialogButton.TabIndex = 6;
@@ -124,7 +126,7 @@ namespace EA_ReqIF_AddIn
 			// 
 			// startButton
 			// 
-			this.startButton.Location = new System.Drawing.Point(348, 204);
+			this.startButton.Location = new System.Drawing.Point(347, 237);
 			this.startButton.Name = "startButton";
 			this.startButton.Size = new System.Drawing.Size(75, 23);
 			this.startButton.TabIndex = 8;
@@ -134,7 +136,7 @@ namespace EA_ReqIF_AddIn
 			// 
 			// cancelButton
 			// 
-			this.cancelButton.Location = new System.Drawing.Point(267, 204);
+			this.cancelButton.Location = new System.Drawing.Point(266, 237);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 7;
@@ -146,10 +148,28 @@ namespace EA_ReqIF_AddIn
 			// 
 			this.pathFileTextBoxErrorProvider.ContainerControl = this;
 			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(226, 17);
+			this.label1.TabIndex = 9;
+			this.label1.Text = "Current selected package in the model tree:";
+			// 
+			// selectedPackageTextBox
+			// 
+			this.selectedPackageTextBox.Location = new System.Drawing.Point(12, 29);
+			this.selectedPackageTextBox.Name = "selectedPackageTextBox";
+			this.selectedPackageTextBox.ReadOnly = true;
+			this.selectedPackageTextBox.Size = new System.Drawing.Size(406, 20);
+			this.selectedPackageTextBox.TabIndex = 10;
+			// 
 			// ImportExportForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(434, 240);
+			this.ClientSize = new System.Drawing.Size(434, 272);
+			this.Controls.Add(this.selectedPackageTextBox);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(groupBox1);
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.startButton);
@@ -167,6 +187,8 @@ namespace EA_ReqIF_AddIn
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox selectedPackageTextBox;
 		private System.Windows.Forms.ErrorProvider pathFileTextBoxErrorProvider;
 		private System.Windows.Forms.RadioButton mergeRequirementsRadioButton;
 		private System.Windows.Forms.Button cancelButton;
