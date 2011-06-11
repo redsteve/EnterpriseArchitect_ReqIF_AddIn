@@ -1,8 +1,4 @@
-﻿/*
- * $Id:$
- */
-
-using System;
+﻿using System;
 using EA;
 
 namespace EA_ReqIF_AddIn
