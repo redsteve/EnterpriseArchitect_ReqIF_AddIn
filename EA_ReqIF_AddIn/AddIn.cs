@@ -1,8 +1,4 @@
-﻿/*
- * $Id:$
- */
- 
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -12,13 +8,13 @@ namespace EA_ReqIF_AddIn
 	/// This is the main add-in class, providing implementations
 	/// to respond to several EA Add-In events. For more information,
 	/// please refer to the Enterprise Architect SDK documentation:
-    /// http://www.sparxsystems.com/uml_tool_guide/sdk_for_enterprise_architect/introduction_2.htm
+	/// http://www.sparxsystems.com/uml_tool_guide/sdk_for_enterprise_architect/introduction_2.htm
 	/// </summary>
 	[ComVisible(true)]
 	public sealed class AddIn
 	{
 		private const string menuHeaderTxt = "-&Requirements Interchange Format Add-In";
-		private const string menuItemImportExportTxt = "&Import/Export Requirements";
+		private const string menuItemImportExportTxt = "&Import/Export Requirements...";
 		private const string menuItemAboutTxt = "&About...";
 
 		/// <summary>
@@ -54,19 +50,19 @@ namespace EA_ReqIF_AddIn
 		/// </description></item>
 		/// </list>
 		/// </returns>
-		public object EA_GetMenuItems(EA.Repository repository, string location, string menuName) 
+		public object EA_GetMenuItems(EA.Repository repository, string location, string menuName)
 		{
-			switch (menuName)
+			switch (location)
 			{
-				case "":
-					return menuHeaderTxt;
+				case "TreeView":
+					return GetTreeViewMenuItems(menuName);
 					
-				case menuHeaderTxt:
-					string[] subMenuItems = { menuItemImportExportTxt, menuItemAboutTxt };
-					return subMenuItems;
+				case "MainMenu":
+					return GetMainMenuMenuItems(menuName);
+					
+				default:
+					return null;
 			}
-			
-			return null;
 		}
 
 		/// <summary>
@@ -85,10 +81,14 @@ namespace EA_ReqIF_AddIn
 		/// <param name="isChecked">Set this to true to check an particular menu option.</param>
 		public void EA_GetMenuState(EA.Repository repository, string location, string menuName, string itemName, ref bool isEnabled, ref bool isChecked)
 		{
-			if (itemName == menuItemImportExportTxt ||
-			    itemName == menuHeaderTxt)
+			if (itemName == menuHeaderTxt)
 			{
 				isEnabled = IsProjectOpen(repository);
+			}
+			
+			if (itemName == menuItemImportExportTxt)
+			{
+				isEnabled = IsModelOrPackageSelected(repository);
 			}
 		}
 		
@@ -105,42 +105,67 @@ namespace EA_ReqIF_AddIn
 		/// it is an empty string.</param>
 		/// <param name="itemName">The name of the option actually clicked.</param>
 		public void EA_MenuClick(EA.Repository repository, string location, string menuName, string itemName)
-		{
-			if (! IsProjectOpen(repository))
-				return;
-			
+		{	
 			switch (itemName)
 			{
 				case menuItemImportExportTxt:
-					showImportExportFormWindow(repository);
+					ShowImportExportFormWindow(repository);
 					break;
 					
 				case menuItemAboutTxt:
-					showAboutDialog();
+					ShowAboutDialog();
 					break;
 			}
 		}
 		
 		/// <summary>
-		/// This method is called by Enterprise Architect when it is closed. Can be
-		/// used to do some cleanup work.
+		/// This method is called by Enterprise Architect when the tool is
+		/// closed. Can be used to do some cleanup work.
 		/// </summary>
-        public void EA_Disconnect()
+		public void EA_Disconnect()
 		{
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
-        }
-	
-		private void showImportExportFormWindow(EA.Repository repository)
-		{
-			Form importExportForm = new ImportExportForm(repository);
-			importExportForm.Show();
 		}
 		
-		private void showAboutDialog()
+		private object GetMainMenuMenuItems(string menuName)
+		{
+			switch (menuName) {
+				case "":
+					return menuHeaderTxt;
+					
+				case menuHeaderTxt:
+					string[] subMenuItems = {
+						menuItemImportExportTxt,
+						menuItemAboutTxt
+					};
+					return subMenuItems;
+					
+				default:
+					return null;
+			}
+		}
+		
+		private object GetTreeViewMenuItems(string menuName)
+		{
+			return menuItemImportExportTxt;
+		}
+		
+		private void ShowImportExportFormWindow(EA.Repository repository)
+		{
+			if (IsProjectOpen(repository))
+			{
+				Form importExportForm = new ImportExportForm(repository);
+				importExportForm.ShowDialog();
+				importExportForm = null;
+			}
+		}
+		
+		private void ShowAboutDialog()
 		{
 			Form aboutBox = new AboutBox();
-			aboutBox.Show();
+			aboutBox.ShowDialog();
+			aboutBox = null;
 		}
 		
 		private static bool IsProjectOpen(EA.Repository repository)
@@ -154,7 +179,20 @@ namespace EA_ReqIF_AddIn
 				return false;
 			}
 		}
-        
+		
+		private static bool IsModelOrPackageSelected(EA.Repository repository)
+		{
+			if (IsProjectOpen(repository))
+			{
+				object item;
+				EA.ObjectType objectType = repository.GetTreeSelectedItem(out item);
+				return (objectType == EA.ObjectType.otModel ||
+				        objectType == EA.ObjectType.otPackage);
+			} else {
+				return false;
+			}
+		}
+		
 		/// <summary>
 		/// The program entry point; only used when add-in is launched from outside EA for
 		/// testing purposes. IMPORTANT: in this case the Add-In must be build as an .exe!
