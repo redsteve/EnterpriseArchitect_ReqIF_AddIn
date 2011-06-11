@@ -1,8 +1,4 @@
-﻿/*
- * $Id:$
- */
-
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Forms;
 using EA;
@@ -10,19 +6,21 @@ using EA;
 namespace EA_ReqIF_AddIn
 {
 	/// <summary>
-	/// Description of ImportExportForm.
+	/// The ImportExportForm is the main dialog of the add-in. It will be created
+	/// and shown if the user selects the corresponding menu item.
 	/// </summary>
 	public partial class ImportExportForm : Form
 	{
-		private EA.Repository repository;
+		private Repository repository;
 		
-		public ImportExportForm(EA.Repository repository)
+		public ImportExportForm(Repository repository)
 		{
 			this.repository = repository;
 			InitializeComponent();
+			ShowCurrentSelectedPackage();
 		}
 		
-		private void OnFileDialogButtonClick(object sender, EventArgs e)
+		private void OnFileDialogButtonClick(object sender, EventArgs eventArgs)
 		{
 			string fileName = retrieveFilenameFromFileDialog();
 			if (fileName != null)
@@ -31,7 +29,7 @@ namespace EA_ReqIF_AddIn
 			}
 		}
 		
-		private void OnStartButtonClick(object sender, EventArgs e)
+		private void OnStartButtonClick(object sender, EventArgs eventArgs)
 		{
 			if (importRequirementsRadioButton.Checked)
 			{
@@ -41,17 +39,28 @@ namespace EA_ReqIF_AddIn
 			}
 		}
 		
-		private void OnCancelButtonClick(object sender, System.EventArgs e)
+		private void OnCancelButtonClick(object sender, EventArgs eventArgs)
 		{
 			Close();
 		}
 		
-		private void OnValidatePathFileTextBox(object sender, System.EventArgs e)
+		private void OnValidatePathFileTextBox(object sender, EventArgs eventArgs)
 		{
 			if (pathFileTextBox.Text.Length == 0)
 			{
 				this.pathFileTextBoxErrorProvider.SetError(pathFileTextBox,
 				                                           "You must provide a valid path and file name!");
+			}
+		}
+		
+		private void ShowCurrentSelectedPackage()
+		{
+			object item;
+			if (repository.GetTreeSelectedItem(out item) == ObjectType.otPackage)
+			{
+				EA.Package package = (EA.Package)item;
+				string text = "\"" + package.Name + "\" (ID: " + package.PackageID + ")";
+				selectedPackageTextBox.Text = text;
 			}
 		}
 		
