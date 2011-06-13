@@ -4,7 +4,7 @@
     <ProjectGuid>{A99535D3-524F-4F3C-A690-A42418490C67}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <OutputType>Library</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>EA_ReqIF_AddIn</RootNamespace>
     <AssemblyName>EA_ReqIF_AddIn</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -72,6 +72,7 @@
     <Compile Include="AddIn.cs" />
     <Compile Include="IReqIfParserCallbackReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReqIfDocument.cs" />
     <Compile Include="ReqIfParser.cs" />
     <Compile Include="RequirementsFromReqIfFileImporter.cs" />
   </ItemGroup>

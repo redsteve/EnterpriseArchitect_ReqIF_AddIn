@@ -10,7 +10,7 @@ namespace EA_ReqIF_AddIn
 	{
 		public RequirementsFromReqIfFileImporter()
 		{
-			
+
 		}
 	}
 }

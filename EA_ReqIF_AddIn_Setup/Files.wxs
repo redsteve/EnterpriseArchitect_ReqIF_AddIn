@@ -4,9 +4,11 @@
 		<DirectoryRef Id="TARGETDIR">
 			<Directory Id="ProgramFilesFolder" Name="PFiles">
 				<Directory Id="INSTALLDIR" Name="Your Application">
-					<Component Id="MyComponent" Guid="D329E80F-84E8-4760-9052-2F674DAF02B3" DiskId="1">
-						<File Id="LicenseFile" Name="license.rtf" Source="license.rtf"/>
+					<Component Id="EA_ReqIF_AddIn_Files" Guid="D329E80F-84E8-4760-9052-2F674DAF02B3" DiskId="1">
+						<File Id="LicenseFile" Name="license.rtf" Source="license.rtf" />
+						<File Id="EA_ReqIF_AddIn.dll" Name="EA_ReqIF_AddIn.dll" Source="..\EA_ReqIF_AddIn\bin\Debug\EA_ReqIF_AddIn.dll" />
 					</Component>
+					<Component Id="EA_ReqIF_AddIn_RegistryEntries" Guid="75619946-7795-4BFB-800D-B2CD835A1AE3" />
 				</Directory>
 			</Directory>
 		</DirectoryRef>
