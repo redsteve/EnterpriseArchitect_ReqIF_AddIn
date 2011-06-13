@@ -9,4 +9,7 @@ ReqIF file. The Requirements Interchange Format is a standardized
 XML-based format (http://www.omg.org/spec/ReqIF/) for requirements
 interchange between organizations or tools.
 
-The Add-In is developed using C#/.NET and #develop (Sharp Develop).
+The Add-In is developed using programming language C# with the
+.NET 4.0 Framework and #develop (spell: "Sharp Develop") 4.0.0.7070
+as the IDE. The solution and project files are compatible with
+Microsoft Visual-Studio 2010.
