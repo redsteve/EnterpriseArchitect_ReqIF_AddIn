@@ -17,12 +17,17 @@ namespace EA_ReqIF_AddIn
 		{
 			this.repository = repository;
 			InitializeComponent();
-			ShowCurrentSelectedPackage();
+			// ShowCurrentSelectedPackage();
+		}
+		
+		private void OnRadioButtonsSelectionChanged(object sender, EventArgs eventArgs)
+		{
+			validateXmlCheckBox.Enabled = importRequirementsRadioButton.Checked;
 		}
 		
 		private void OnFileDialogButtonClick(object sender, EventArgs eventArgs)
 		{
-			string fileName = retrieveFilenameFromFileDialog();
+			string fileName = RetrieveFilenameFromFileDialog();
 			if (fileName != null)
 			{
 				pathFileTextBox.Text = fileName;
@@ -33,9 +38,9 @@ namespace EA_ReqIF_AddIn
 		{
 			if (importRequirementsRadioButton.Checked)
 			{
-				importRequirementsFromReqIfFile();
+				ImportRequirementsFromReqIfFile();
 			} else {
-				exportRequirementsToReqIfFile();
+				ExportRequirementsToReqIfFile();
 			}
 		}
 		
@@ -53,6 +58,8 @@ namespace EA_ReqIF_AddIn
 			}
 		}
 		
+
+		
 		private void ShowCurrentSelectedPackage()
 		{
 			object item;
@@ -64,7 +71,7 @@ namespace EA_ReqIF_AddIn
 			}
 		}
 		
-		private string retrieveFilenameFromFileDialog()
+		private string RetrieveFilenameFromFileDialog()
 		{
 			string fileName;
 			
@@ -82,7 +89,12 @@ namespace EA_ReqIF_AddIn
 			return fileName;
 		}
 		
-		private void importRequirementsFromReqIfFile()
+		private bool IsValidationOfReqIfFileDesired()
+		{
+			return (validateXmlCheckBox.Enabled && validateXmlCheckBox.Checked);
+		}
+		
+		private void ImportRequirementsFromReqIfFile()
 		{
 			string filename = pathFileTextBox.Text;
 			ReqIfParser reqIfParser = null;
@@ -90,20 +102,32 @@ namespace EA_ReqIF_AddIn
 			
 			try
 			{
-				reqIfParser = new ReqIfParser(ref filename);
-				reqIfParser.parse(importer);
+				bool doValidate = IsValidationOfReqIfFileDesired();
+				reqIfParser = new ReqIfParser(filename, doValidate);
+				reqIfParser.Parse(importer);
 			}
-			catch (FileNotFoundException ex)
+			catch (Exception ex)
 			{
-				MessageBox.Show("The following error has occured:\n" +
-				                ex.Message, "Error", MessageBoxButtons.OK,
+				MessageBox.Show("The following exception has occured: " +
+				                ex.GetType().ToString() + "\n" +
+				                ex.Message, "Error!", MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
 			}
 		}
 		
-		private void exportRequirementsToReqIfFile()
+		private void ExportRequirementsToReqIfFile()
 		{
-			
+			object item;
+			if (repository.GetTreeSelectedItem(out item) == ObjectType.otPackage)
+			{
+				EA.Package package = (EA.Package)item;
+				
+				short numOfPackages = package.Packages.Count;
+				for (short index = 0; index < numOfPackages; index++)
+				{
+					
+				}
+			}
 		}
 	}
 }
