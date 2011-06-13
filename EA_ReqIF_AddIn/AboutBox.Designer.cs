@@ -1,8 +1,4 @@
-﻿/*
- * $Id:$
- */
- 
-namespace EA_ReqIF_AddIn
+﻿namespace EA_ReqIF_AddIn
 {
 	partial class AboutBox
 	{
