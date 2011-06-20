@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Xml;
-using System.Xml.Schema;
 
 namespace EA_ReqIF_AddIn
 {
@@ -12,8 +10,6 @@ namespace EA_ReqIF_AddIn
 	public sealed class ReqIfParser
 	{
 		private XmlReader xmlReader;
-		private static string xsdURI = "reqif.xsd";
-		private static ArrayList validationMessages = new ArrayList();
 		
 		/// <summary>
 		/// An initialization constructor.
@@ -23,29 +19,33 @@ namespace EA_ReqIF_AddIn
 		public ReqIfParser(String filename, bool doValidate)
 		{
 			CheckFilenameArgument(filename);
-			xmlReader = XmlTextReader.Create(filename);
 			if (doValidate)
 			{
 				ValidateXmlDocument(filename);
 			}
+			xmlReader = XmlTextReader.Create(filename);
 		}
 		
 		public void Parse(IReqIfParserCallbackReceiver callbackReceiver)
 		{
 			if (xmlReader != null)
 			{
-				while (xmlReader.Read())
+				while ( xmlReader.Read() )
 				{
-					string xmlString = xmlReader.ReadString();
+					if (xmlReader.NodeType == XmlNodeType.Element)
+					{
+						callbackReceiver.ProcessElementStartNode(xmlReader.Name);
+					} else if (xmlReader.NodeType == XmlNodeType.Text)
+					{
+						callbackReceiver.ProcessTextNode(xmlReader.Name);
+					} else if (xmlReader.NodeType == XmlNodeType.EndElement)
+					{
+						callbackReceiver.ProcessElementEndNode(xmlReader.Name);
+					}
 				}
 			}
 		}
 
-		public static ArrayList ValidationResultMessages
-		{
-			get { return validationMessages; }
-		}
-		
 		private void CheckFilenameArgument(String filename)
 		{
 			if (filename == null) {
@@ -58,45 +58,11 @@ namespace EA_ReqIF_AddIn
 
 		private void ValidateXmlDocument(String filename)
 		{
-			StreamReader xsdStreamReader = new StreamReader(xsdURI);
-			XmlSchema schema = new XmlSchema();
-			
-			schema = XmlSchema.Read(xsdStreamReader,
-			                        new ValidationEventHandler(XmlSchemaValidationCallBack));
-			XmlReaderSettings xmlReaderSettings = RetrieveXmlReaderSettings(schema);
-			XmlReader validationXmlReader = XmlReader.Create(xmlReader, xmlReaderSettings);
-
-			while (validationXmlReader.Read())
-			{ /* Empty loop */ }
-		}
-		
-		private XmlReaderSettings RetrieveXmlReaderSettings(XmlSchema schemaForValidation)
-		{
-			XmlReaderSettings settings = new XmlReaderSettings();
-			settings.ValidationEventHandler += new ValidationEventHandler(XmlSchemaValidationCallBack);
-			settings.Schemas = new XmlSchemaSet();
-			
-			settings.ValidationType = ValidationType.Schema;
-			settings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
-			settings.Schemas.Add(schemaForValidation);
-			settings.ConformanceLevel = ConformanceLevel.Auto;
-			settings.IgnoreWhitespace = true;
-			settings.IgnoreComments = true;
-
-			return settings;
-		}
-
-		private XmlSchemaSet createXmlSchemaSetForValidation()
-		{
-			XmlSchemaSet xmlSchemaSet = new XmlSchemaSet();
-			xmlSchemaSet.XmlResolver = new XmlUrlResolver();
-			xmlSchemaSet.Add(null, xsdURI);
-			return xmlSchemaSet;
-		}
-
-		private static void XmlSchemaValidationCallBack(object sender, ValidationEventArgs args)
-		{
-			validationMessages.Add("[" + args.Exception.GetType().ToString() + "]: " + args.Message);
+			ReqIfFileValidator validator = new ReqIfFileValidator();
+			if (! validator.Validate(filename, "reqif.xsd"))
+			{
+				// TODO: Show a dialog containing a list view with errors and warnings here!
+			}
 		}
 	}
 }
