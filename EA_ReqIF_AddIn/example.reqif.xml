@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
+  xml:lang="en">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="EF5AEFF3-C695-488A-9955-EDAAEACFE359">
+      <COMMENT>Optional comment associated with the Exchange Document as a
+      whole</COMMENT>
+      <CREATION-TIME>2011-06-13T10:24:18+01:00</CREATION-TIME>
+      <REPOSITORY-ID>A4123EB9-CC82-4B62-95E1-31CB3203E39C</REPOSITORY-ID>
+      <REQ-IF-TOOL-ID>SparxSystems Enterprise Architect 8.0</REQ-IF-TOOL-ID>
+      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <SOURCE-TOOL-ID>microTool in-Step</SOURCE-TOOL-ID>
+      <TITLE>Example ReqIF file</TITLE>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+      </DATATYPES>
+      <SPEC-TYPES>
+        <SPECIFICATION-TYPE DESC = "A User Requirements Specification (a.k.a. Stakeholder Requirements Specification) specifies the requirements the user expects from the system to be constructed." IDENTIFIER = "URS" LAST-CHANGE = "2011-06-13T00:00:00+01:00" LONG-NAME = "User Requirements Specification">
+        </SPECIFICATION-TYPE>
+        <SPECIFICATION-TYPE DESC = "A System Requirements Specification." IDENTIFIER = "SRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "System Requirements Specification">
+        </SPECIFICATION-TYPE>
+        <SPECIFICATION-TYPE DESC = "A Subsystem/Components Requirements Specification." IDENTIFIER = "CRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Subsystem/Components Requirements Specification">
+        </SPECIFICATION-TYPE>
+        <SPEC-OBJECT-TYPE DESC = "A functional requirement describes what the system must do." IDENTIFIER = "FUNC-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Functional Requirement">
+        </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE DESC = "A non-functional requirement specifies criteria that can be used to judge the operation of a system, rather than specific behaviors. It specifies qualities or constraints, i.e. how the system must be." IDENTIFIER = "NFUNCREQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Non-functional Requirement">
+        </SPEC-OBJECT-TYPE>
+      </SPEC-TYPES>
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT DESC = "The system shall do something special." IDENTIFIER = "REQ-1" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "A requirement">
+         <TYPE>
+            <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+        <SPEC-OBJECT DESC = "The system shall do something boring." IDENTIFIER = "REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
+           <TYPE>
+             <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
+           </TYPE>
+        </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      <SPEC-RELATIONS>
+      </SPEC-RELATIONS>
+      <SPECIFICATIONS>
+        <SPECIFICATION IDENTIFIER = "XYZ" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>URS</SPECIFICATION-TYPE-REF>
+          </TYPE>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+      <SPEC-RELATION-GROUPS>
+      </SPEC-RELATION-GROUPS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+</REQ-IF>
