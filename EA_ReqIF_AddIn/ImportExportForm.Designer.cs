@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Stephan Roth
- * Date: 29.05.2011
- * Time: 17:57
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-namespace EA_ReqIF_AddIn
+﻿namespace EA_ReqIF_AddIn
 {
 	partial class ImportExportForm
 	{
