@@ -11,6 +11,8 @@ namespace EA_ReqIF_AddIn
 	/// </summary>
 	public interface IReqIfParserCallbackReceiver
 	{
-
+		void ProcessElementStartNode(string name);
+		void ProcessTextNode(string name);
+		void ProcessElementEndNode(string name);
 	}
 }
