@@ -88,6 +88,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\LICENSE">
+      <Link>LICENSE</Link>
+    </None>
     <None Include="..\README">
       <Link>README</Link>
     </None>
