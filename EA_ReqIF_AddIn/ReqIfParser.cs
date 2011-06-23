@@ -30,20 +30,36 @@ namespace EA_ReqIF_AddIn
 		{
 			if (xmlReader != null)
 			{
-				while ( xmlReader.Read() )
+				while (xmlReader.Read())
 				{
-					if (xmlReader.NodeType == XmlNodeType.Element)
+					switch (xmlReader.NodeType)
 					{
-						callbackReceiver.ProcessElementStartNode(xmlReader.Name);
-					} else if (xmlReader.NodeType == XmlNodeType.Text)
-					{
-						callbackReceiver.ProcessTextNode(xmlReader.Name);
-					} else if (xmlReader.NodeType == XmlNodeType.EndElement)
-					{
-						callbackReceiver.ProcessElementEndNode(xmlReader.Name);
+						case XmlNodeType.Element:
+							callbackReceiver.ProcessElementStartNode(xmlReader.Name);
+							if (xmlReader.HasAttributes)
+								ProcessAttributes(xmlReader, callbackReceiver);
+							break;
+							
+						case XmlNodeType.Text:
+							callbackReceiver.ProcessTextNode(xmlReader.Name);
+							break;
+							
+						case XmlNodeType.EndElement:
+							callbackReceiver.ProcessElementEndNode(xmlReader.Name);
+							break;
 					}
 				}
 			}
+		}
+		
+		private void ProcessAttributes(XmlReader xmlReader, IReqIfParserCallbackReceiver callbackReceiver)
+		{
+			while (xmlReader.MoveToNextAttribute())
+			{
+				callbackReceiver.ProcessAttribute(xmlReader.Name, xmlReader.Value);
+			}
+
+			xmlReader.MoveToElement();
 		}
 
 		private void CheckFilenameArgument(String filename)

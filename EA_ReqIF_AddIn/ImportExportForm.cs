@@ -12,12 +12,13 @@ namespace EA_ReqIF_AddIn
 	public partial class ImportExportForm : Form
 	{
 		private Repository repository;
+		private Package currentSelectedPackage;
 		
 		public ImportExportForm(Repository repository)
 		{
 			this.repository = repository;
 			InitializeComponent();
-			// ShowCurrentSelectedPackage();
+			ShowCurrentSelectedPackage();
 		}
 		
 		private void OnRadioButtonsSelectionChanged(object sender, EventArgs eventArgs)
@@ -57,16 +58,15 @@ namespace EA_ReqIF_AddIn
 				                                           "You must provide a valid path and file name!");
 			}
 		}
-		
 
-		
 		private void ShowCurrentSelectedPackage()
 		{
 			object item;
 			if (repository.GetTreeSelectedItem(out item) == ObjectType.otPackage)
 			{
-				EA.Package package = (EA.Package)item;
-				string text = "\"" + package.Name + "\" (ID: " + package.PackageID + ")";
+				currentSelectedPackage = (EA.Package)item;
+				string text = "\"" + currentSelectedPackage.Name + "\" (ID: " +
+					currentSelectedPackage.PackageID + ")";
 				selectedPackageTextBox.Text = text;
 			}
 		}
@@ -98,7 +98,8 @@ namespace EA_ReqIF_AddIn
 		{
 			string filename = pathFileTextBox.Text;
 			ReqIfParser reqIfParser = null;
-			RequirementsFromReqIfFileImporter importer = new RequirementsFromReqIfFileImporter();
+			RequirementsFromReqIfFileImporter importer =
+				new RequirementsFromReqIfFileImporter(currentSelectedPackage);
 			
 			try
 			{

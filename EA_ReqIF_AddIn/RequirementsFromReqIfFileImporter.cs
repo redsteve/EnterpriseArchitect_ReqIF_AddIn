@@ -6,42 +6,40 @@ namespace EA_ReqIF_AddIn
 	/// <summary>
 	/// Description of RequirementsIntoModelImporter.
 	/// </summary>
-	public class RequirementsFromReqIfFileImporter : IReqIfParserCallbackReceiver
+	public class RequirementsFromReqIfFileImporter : BasicReqIfFileImporter
 	{
-		private enum ProcessingStage
+		private Package rootPackage;
+		
+		public RequirementsFromReqIfFileImporter(Package rootPackage)
 		{
-			Start,
-			ProcessingReqIfDocument,
-			ProcessingReqIfHeader,
+			this.rootPackage = rootPackage;
 		}
 		
-		private ProcessingStage stage;
-		
-		public RequirementsFromReqIfFileImporter()
-		{
-			stage = ProcessingStage.Start;
-		}
-		
-		public void ProcessElementStartNode(string name)
+		public override void ProcessElementStartNode(string name)
 		{
 			switch (name)
 			{
-				case "REQ-IF":
-					EnteringReqIfDocument();
-					break;
-					
 				case "REQ-IF-HEADER":
 					EnteringReqIfHeader();
+					break;
+					
+				default:
+					PassElementStartNodeToSubImporter(name);
 					break;
 			}
 		}
 		
-		public void ProcessTextNode(string name)
+		public override void ProcessAttribute(string name, string value)
 		{
-			// throw new NotImplementedException();
+			PassAttributeToSubImporter(name, value);
 		}
 		
-		public void ProcessElementEndNode(string name)
+		public override void ProcessTextNode(string text)
+		{
+			PassTextNodeToSubImporter(text);
+		}
+		
+		public override void ProcessElementEndNode(string name)
 		{
 			switch (name)
 			{
@@ -49,66 +47,20 @@ namespace EA_ReqIF_AddIn
 					LeavingReqIfHeader();
 					break;
 					
-				case "REQ-IF":
-					LeavingReqIfDocument();
-					break;
-			}
-		}
-		
-		private void EnteringReqIfDocument()
-		{
-			switch (stage)
-			{
-				case ProcessingStage.Start:
-					stage = ProcessingStage.ProcessingReqIfDocument;
-					break;
-					
 				default:
-					throw new InvalidOperationException();
-					
-			}
-		}
-		
-		private void LeavingReqIfDocument()
-		{
-			switch (stage)
-			{
-				case ProcessingStage.Start:
-					stage = ProcessingStage.ProcessingReqIfDocument;
+					PassElementEndNodeToSubImporter(name);
 					break;
-					
-				default:
-					throw new InvalidOperationException();
-					
 			}
 		}
 		
 		private void EnteringReqIfHeader()
 		{
-			switch (stage)
-			{
-				case ProcessingStage.ProcessingReqIfDocument:
-					stage = ProcessingStage.ProcessingReqIfHeader;
-					break;
-					
-				default:
-					throw new InvalidOperationException();
-					
-			}
+			subImporter = (IReqIfParserCallbackReceiver)new ReqIfHeaderImporter(rootPackage);
 		}
 		
 		private void LeavingReqIfHeader()
 		{
-			switch (stage)
-			{
-				case ProcessingStage.ProcessingReqIfHeader:
-					stage = ProcessingStage.ProcessingReqIfDocument;
-					break;
-					
-//				default:
-//					throw new InvalidOperationException();
-					
-			}
+			subImporter = null;
 		}
 	}
 }
