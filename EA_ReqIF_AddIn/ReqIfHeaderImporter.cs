@@ -4,9 +4,10 @@ using EA;
 namespace EA_ReqIF_AddIn
 {
 	/// <summary>
-	/// Description of ReqIfHeaderImporter.
+	/// Objects of this class are responsible for importing the parts of a ReqIF file between
+	/// XML nodes <c>&lt;REQ-IF-HEADER&gt;</c> and <c>&lt;/REQ-IF-HEADER&gt;</c>.
 	/// </summary>
-	public class ReqIfHeaderImporter
+	public class ReqIfHeaderImporter : BasicReqIfFileImporter
 	{
 		private enum ProcessingElement
 		{
@@ -23,13 +24,18 @@ namespace EA_ReqIF_AddIn
 		private ProcessingElement processingElement;
 		private Package requirementsPackage;
 		
+		public Package RequirementsPackage
+		{
+			get { return requirementsPackage; }
+		}
+		
 		public ReqIfHeaderImporter(Package rootPackage)
 		{
 			processingElement = ProcessingElement.Undefined;
 			
 			if (rootPackage == null)
 			{
-				throw new Exception();
+				throw new ArgumentNullException();
 			}
 
 			createPackage(rootPackage);
@@ -40,14 +46,15 @@ namespace EA_ReqIF_AddIn
 			EnterpriseArchitectModelElementFactory factory =
 				new EnterpriseArchitectModelElementFactory();
 			requirementsPackage = factory.createPackage(rootPackage, "Requirements");
+			requirementsPackage.Element.Author = "<imported>";
 			requirementsPackage.StereotypeEx = "ExchangeDocument";
 			if (! requirementsPackage.Update())
 			{
-				
+				throw new ParserFailureException();
 			}
 		}
 		
-		public void ProcessElementStartNode(string name)
+		public override void ProcessElementStartNode(string name)
 		{
 			switch (name)
 			{
@@ -80,11 +87,11 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				default:
-					throw new InvalidOperationException();
+					throw new ParserFailureException("Unexpected or unknown element node: " + name + ".");
 			}
 		}
 		
-		public void ProcessTextNode(string text)
+		public override void ProcessTextNode(string text)
 		{
 			switch (processingElement)
 			{
@@ -93,21 +100,23 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				case ProcessingElement.CreationTime:
-					DateTime creationTime = DateTime.Parse(text);
-					requirementsPackage.Created = creationTime;
-					requirementsPackage.Modified = creationTime;
+					SetElementsCreatedAndModifiedTimeStamps(requirementsPackage, text);
 					break;
 					
 				case ProcessingElement.RepositoryId:
+					AddTaggedValueToElement(requirementsPackage.Element, "repositoryId", "String", text);
 					break;
 					
 				case ProcessingElement.ReqIfToolId:
+					AddTaggedValueToElement(requirementsPackage.Element, "reqIfToolId", "String", text);
 					break;
 					
 				case ProcessingElement.ReqIfVersion:
+					AddTaggedValueToElement(requirementsPackage.Element, "reqIfVersion", "String", text);
 					break;
 					
 				case ProcessingElement.SourceToolId:
+					AddTaggedValueToElement(requirementsPackage.Element, "sourceToolId", "String", text);
 					break;
 					
 				case ProcessingElement.Title:
@@ -115,7 +124,30 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				default:
-					throw new InvalidOperationException();
+					throw new ParserFailureException("Unexpected or unknown text node: " + text + ".");
+			}
+			
+			if (! requirementsPackage.Update())
+			{
+				throw new ParserFailureException(requirementsPackage.GetLastError());
+			}
+		}
+
+		public override void ProcessElementEndNode(string name)
+		{
+			// Nothing to do here!
+		}
+		
+		public override void ProcessAttribute(string name, string value)
+		{
+			switch (name)
+			{
+				case "IDENTIFIER":
+					AddTaggedValueToElement(requirementsPackage.Element, "identifier", "String", value);
+					break;
+					
+				default:
+					throw new ParserFailureException("Unexpected or unknown attribute: " + name + ".");
 			}
 		}
 	}
