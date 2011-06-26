@@ -4,15 +4,15 @@ using EA;
 namespace EA_ReqIF_AddIn
 {
 	/// <summary>
-	/// Description of RequirementsIntoModelImporter.
+	/// This is the main importer for ReqIF files.
 	/// </summary>
 	public class RequirementsFromReqIfFileImporter : BasicReqIfFileImporter
 	{
-		private Package rootPackage;
+		private Package currentPackage;
 		
 		public RequirementsFromReqIfFileImporter(Package rootPackage)
 		{
-			this.rootPackage = rootPackage;
+			this.currentPackage = rootPackage;
 		}
 		
 		public override void ProcessElementStartNode(string name)
@@ -21,6 +21,10 @@ namespace EA_ReqIF_AddIn
 			{
 				case "REQ-IF-HEADER":
 					EnteringReqIfHeader();
+					break;
+
+				case "REQ-IF-CONTENT":
+					EnteringReqIfContent();
 					break;
 					
 				default:
@@ -47,6 +51,10 @@ namespace EA_ReqIF_AddIn
 					LeavingReqIfHeader();
 					break;
 					
+				case "REQ-IF-CONTENT":
+					LeavingReqIfContent();
+					break;
+					
 				default:
 					PassElementEndNodeToSubImporter(name);
 					break;
@@ -55,10 +63,21 @@ namespace EA_ReqIF_AddIn
 		
 		private void EnteringReqIfHeader()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new ReqIfHeaderImporter(rootPackage);
+			subImporter = (IReqIfParserCallbackReceiver)new ReqIfHeaderImporter(currentPackage);
 		}
 		
 		private void LeavingReqIfHeader()
+		{
+			currentPackage = ((ReqIfHeaderImporter)subImporter).RequirementsPackage;
+			subImporter = null;
+		}
+		
+		private void EnteringReqIfContent()
+		{
+			subImporter = (IReqIfParserCallbackReceiver)new ReqIfContentImporter(currentPackage);
+		}
+		
+		private void LeavingReqIfContent()
 		{
 			subImporter = null;
 		}
