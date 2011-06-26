@@ -66,6 +66,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="BasicReqIfFileImporter.cs" />
+    <Compile Include="DatatypesImporter.cs" />
     <Compile Include="EnterpriseArchitectModelElement.cs" />
     <Compile Include="EnterpriseArchitectModelElementFactory.cs" />
     <Compile Include="ImportExportForm.cs" />
@@ -74,13 +75,16 @@
     </Compile>
     <Compile Include="AddIn.cs" />
     <Compile Include="IReqIfParserCallbackReceiver.cs" />
+    <Compile Include="ParserFailureException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReqIfContentImporter.cs" />
     <Compile Include="ReqIfDocument.cs" />
     <Compile Include="ReqIfFileValidator.cs" />
     <Compile Include="ReqIfHeaderImporter.cs" />
     <Compile Include="ReqIfParser.cs" />
     <Compile Include="RequirementsFromReqIfFileImporter.cs" />
     <Compile Include="RequirementsPackage.cs" />
+    <Compile Include="SpecificationsImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBox.resx">
