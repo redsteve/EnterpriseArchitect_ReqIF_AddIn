@@ -21,7 +21,7 @@ namespace EA_ReqIF_AddIn
 			
 			if (newPackage == null)
 			{
-				throw new Exception();
+				throw new Exception("Adding a new package to another package failed.");
 			}
 			
 			if (! newPackage.Update())
@@ -39,7 +39,7 @@ namespace EA_ReqIF_AddIn
 			
 			if (requirement == null)
 			{
-				throw new Exception();
+				throw new Exception("Adding a new requirement to a package failed.");
 			}
 			
 			if (! requirement.Update())
