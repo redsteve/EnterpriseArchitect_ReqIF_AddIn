@@ -13,7 +13,7 @@ namespace EA_ReqIF_AddIn
 	{
 		void ProcessElementStartNode(string name);
 		void ProcessAttribute(string name, string value);
-		void ProcessTextNode(string name);
+		void ProcessTextNode(string text);
 		void ProcessElementEndNode(string name);
 	}
 }
