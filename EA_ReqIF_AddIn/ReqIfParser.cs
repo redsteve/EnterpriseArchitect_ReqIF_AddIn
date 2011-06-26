@@ -41,7 +41,7 @@ namespace EA_ReqIF_AddIn
 							break;
 							
 						case XmlNodeType.Text:
-							callbackReceiver.ProcessTextNode(xmlReader.Name);
+							callbackReceiver.ProcessTextNode(xmlReader.Value);
 							break;
 							
 						case XmlNodeType.EndElement:
