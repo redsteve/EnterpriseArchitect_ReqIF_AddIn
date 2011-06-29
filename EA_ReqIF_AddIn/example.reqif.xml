@@ -5,8 +5,7 @@
   xml:lang="en">
   <THE-HEADER>
     <REQ-IF-HEADER IDENTIFIER="EF5AEFF3-C695-488A-9955-EDAAEACFE359">
-      <COMMENT>Optional comment associated with the Exchange Document as a
-      whole</COMMENT>
+      <COMMENT>Optional comment associated with the Exchange Document as a whole</COMMENT>
       <CREATION-TIME>2011-06-13T10:24:18+01:00</CREATION-TIME>
       <REPOSITORY-ID>A4123EB9-CC82-4B62-95E1-31CB3203E39C</REPOSITORY-ID>
       <REQ-IF-TOOL-ID>SparxSystems Enterprise Architect 8.0</REQ-IF-TOOL-ID>
@@ -28,25 +27,52 @@
         </SPECIFICATION-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A functional requirement describes what the system must do." IDENTIFIER = "FUNC-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Functional Requirement">
         </SPEC-OBJECT-TYPE>
-        <SPEC-OBJECT-TYPE DESC = "A non-functional requirement specifies criteria that can be used to judge the operation of a system, rather than specific behaviors. It specifies qualities or constraints, i.e. how the system must be." IDENTIFIER = "NFUNCREQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Non-functional Requirement">
+        <SPEC-OBJECT-TYPE DESC = "A non-functional requirement specifies criteria that can be used to judge the operation of a system, rather than specific behaviors. It specifies qualities or constraints, i.e. how the system must be." IDENTIFIER = "NFUNC-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Non-functional Requirement">
         </SPEC-OBJECT-TYPE>
+        <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "deriveReq" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Derive Requirement Relationship">
+        </SPEC-RELATION-TYPE>
+        <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "refine" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Refine Relationship">
+        </SPEC-RELATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT DESC = "The system shall do something special." IDENTIFIER = "REQ-1" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "A requirement">
-         <TYPE>
+        <SPEC-OBJECT DESC = "The system shall do something special." IDENTIFIER = "FUNC-REQ-1" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "A requirement">
+          <TYPE>
             <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
           </TYPE>
         </SPEC-OBJECT>
-        <SPEC-OBJECT DESC = "The system shall do something boring." IDENTIFIER = "REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
+        <SPEC-OBJECT DESC = "The system shall do something boring." IDENTIFIER = "FUNC-REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
            <TYPE>
              <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
            </TYPE>
         </SPEC-OBJECT>
+        <SPEC-OBJECT DESC = "The system shall be very fast." IDENTIFIER = "NFUNC-REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
+           <TYPE>
+             <SPEC-OBJECT-TYPE-REF>NFUNCREQ</SPEC-OBJECT-TYPE-REF>
+           </TYPE>
+        </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
+        <SPEC-RELATION  IDENTIFIER = "CDB3C6E4-8014-4167-9D21-A8E13D98C6CA" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+          <SOURCE>
+            <SPEC-OBJECT-REF>REQ-1</SPEC-OBJECT-REF>
+          </SOURCE>
+          <TARGET>
+            <SPEC-OBJECT-REF>REQ-2</SPEC-OBJECT-REF>
+          </TARGET>
+          <TYPE>
+            <SPEC-RELATION-TYPE-REF>deriveReq</SPEC-RELATION-TYPE-REF>
+          </TYPE>
+        </SPEC-RELATION>
       </SPEC-RELATIONS>
       <SPECIFICATIONS>
-        <SPECIFICATION IDENTIFIER = "XYZ" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+        <SPECIFICATION LONG-NAME="System X Requirements" DESC="This is the User Requirements Specification for System X of Customer Y." IDENTIFIER = "F785DE59-9D79-4DEB-9709-AACC015EF7A1" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+          <CHILDREN>
+            <SPEC-HIERARCHY IDENTIFIER = "E65E8A75-F1C1-48D1-9681-8AD99E2BE6EE" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+              <OBJECT>
+                <SPEC-OBJECT-REF>REQ-1</SPEC-OBJECT-REF>
+              </OBJECT>
+            </SPEC-HIERARCHY>
+          </CHILDREN>
           <TYPE>
             <SPECIFICATION-TYPE-REF>URS</SPECIFICATION-TYPE-REF>
           </TYPE>
