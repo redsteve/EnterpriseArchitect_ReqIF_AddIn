@@ -50,7 +50,7 @@ namespace EA_ReqIF_AddIn
 			requirementsPackage.StereotypeEx = "ExchangeDocument";
 			if (! requirementsPackage.Update())
 			{
-				throw new ParserFailureException();
+				throw new ParserFailureException(requirementsPackage.GetLastError());
 			}
 		}
 		
@@ -100,7 +100,8 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				case ProcessingElement.CreationTime:
-					SetElementsCreatedAndModifiedTimeStamps(requirementsPackage, text);
+					DateTime createAndModifiedDateTime = ConvertStringifiedDateTime(text);
+					SetElementsCreatedAndModifiedTimeStamps(requirementsPackage, createAndModifiedDateTime);
 					break;
 					
 				case ProcessingElement.RepositoryId:
