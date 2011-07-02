@@ -13,11 +13,14 @@ namespace EA_ReqIF_AddIn
 		{
 			Undefined,
 			Specification,
+			Identifier,
+			LongName,
+			Description,
 			Type
 		}
 		
 		private ProcessingElement processingElement;
-		private Package requirementsPackage;
+		private Package specificationPackage;
 		
 		public SpecificationsImporter(Package requirementsPackage)
 		{
@@ -28,7 +31,20 @@ namespace EA_ReqIF_AddIn
 				throw new ArgumentNullException();
 			}
 			
-			this.requirementsPackage = requirementsPackage;
+			this.specificationPackage = requirementsPackage;
+		}
+		
+		private void createPackage(Package rootPackage)
+		{
+			EnterpriseArchitectModelElementFactory factory =
+				new EnterpriseArchitectModelElementFactory();
+			specificationPackage = factory.createPackage(rootPackage, "Specification");
+			specificationPackage.Element.Author = "<imported>";
+			specificationPackage.StereotypeEx = "Specification";
+			if (! specificationPackage.Update())
+			{
+				throw new ParserFailureException(specificationPackage.GetLastError());
+			}
 		}
 		
 		public override void ProcessTextNode(string text)
@@ -38,7 +54,15 @@ namespace EA_ReqIF_AddIn
 		
 		public override void ProcessElementStartNode(string name)
 		{
-			throw new NotImplementedException();
+			switch (name)
+			{
+				case "SPECIFICATION":
+					EnteringSpecification();
+					break;
+					
+				default:
+					throw new ParserFailureException(unexpectedElementNodeError + name + ".");
+			}
 		}
 		
 		public override void ProcessElementEndNode(string name)
@@ -49,6 +73,11 @@ namespace EA_ReqIF_AddIn
 		public override void ProcessAttribute(string name, string value)
 		{
 			throw new NotImplementedException();
+		}
+		
+		private void EnteringSpecification()
+		{
+			createPackage(specificationPackage);
 		}
 	}
 }
