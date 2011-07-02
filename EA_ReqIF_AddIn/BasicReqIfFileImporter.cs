@@ -10,6 +10,9 @@ namespace EA_ReqIF_AddIn
 	public abstract class BasicReqIfFileImporter : IReqIfParserCallbackReceiver
 	{
 		private const string xsdDateTimeFormat = "yyyy-MM-ddThh:mm:sszzz";
+		protected const string unexpectedElementNodeError = "Unknown or unexpected element node appeared: ";
+		protected const string unexpectedTextNodeError = "Unknown or unexpected text node appeared.";
+		protected const string unexpectedAttributeError = "Unknown or unexpected attribute appeared: ";
 		
 		protected IReqIfParserCallbackReceiver subImporter;
 
@@ -55,17 +58,25 @@ namespace EA_ReqIF_AddIn
 			}
 		}
 		
-		protected static void SetElementsCreatedAndModifiedTimeStamps(Package package, string text)
+		protected static DateTime ConvertStringifiedDateTime(string text)
 		{
 			CultureInfo formatProvider = CultureInfo.InvariantCulture;
-			DateTime creationTime = DateTime.ParseExact(text, xsdDateTimeFormat, formatProvider);
-			package.Created = creationTime;
-			package.Modified = creationTime;
+			DateTime dateTime = DateTime.ParseExact(text, xsdDateTimeFormat, formatProvider);
+			return dateTime;
 		}
-				
+		
+		protected static void SetElementsCreatedAndModifiedTimeStamps(Package package, DateTime dateTime)
+		{
+			package.Created = dateTime;
+			package.Modified = dateTime;
+		}
+
 		protected static void AddTaggedValueToElement(Element element, string valueName,
 		                                              string valueType, string value)
 		{
+			if (element == null)
+				throw new ArgumentNullException("element; Class: BasicReqIfFileImporter");
+			
 			TaggedValue taggedValue =
 				(TaggedValue)element.TaggedValues.AddNew(valueName, valueType);
 			
