@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Windows.Forms;
 using EA;
 
 namespace EA_ReqIF_AddIn
@@ -10,6 +12,8 @@ namespace EA_ReqIF_AddIn
 	public class ReqIfContentImporter : BasicReqIfFileImporter
 	{
 		private Package requirementsPackage;
+		
+		private Hashtable specificationTypes;
 		
 		public ReqIfContentImporter(Package requirementsPackage)
 		{
@@ -50,7 +54,8 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				default:
-					throw new ParserFailureException("Unexpected or unknown element start node: " + name + ".");
+					PassElementStartNodeToSubImporter(name);
+					break;
 			}
 		}
 		
@@ -59,31 +64,17 @@ namespace EA_ReqIF_AddIn
 			switch (name)
 			{
 				case "DATATYPES":
-					LeavingDatatypes();
-					break;
-					
 				case "SPEC-TYPES":
-					LeavingSpecTypes();
-					break;
-					
 				case "SPEC-OBJECTS":
-					LeavingSpecObjects();
-					break;
-					
 				case "SPEC-RELATIONS":
-					LeavingSpecRelations();
-					break;
-					
 				case "SPECIFICATIONS":
-					LeavingSpecifications();
-					break;
-					
 				case "SPEC-RELATION-GROUPS":
-					LeavingSpecRelationGroups();
+					LeavingSubImporter();
 					break;
 					
 				default:
-					throw new ParserFailureException("Unexpected or unknown element end node: " + name + ".");
+					PassElementEndNodeToSubImporter(name);
+					break;
 			}
 		}
 		
@@ -102,39 +93,21 @@ namespace EA_ReqIF_AddIn
 			subImporter = (IReqIfParserCallbackReceiver)new DatatypesImporter();
 		}
 		
-		private void LeavingDatatypes()
-		{
-			subImporter = null;
-		}
-		
 		private void EnteringSpecTypes()
 		{
-			throw new NotImplementedException();
-		}
-		
-		private void LeavingSpecTypes()
-		{
-			subImporter = null;
+			specificationTypes = new Hashtable();
+			subImporter = (IReqIfParserCallbackReceiver)new SpecTypesImporter(ref specificationTypes);
+			MessageBox.Show(specificationTypes.ToString());
 		}
 		
 		private void EnteringSpecObjects()
 		{
-			throw new NotImplementedException();
-		}
-		
-		private void LeavingSpecObjects()
-		{
-			subImporter = null;
+			subImporter = (IReqIfParserCallbackReceiver)new SpecObjectsImporter();
 		}
 		
 		private void EnteringSpecRelations()
 		{
-			throw new NotImplementedException();
-		}
-		
-		private void LeavingSpecRelations()
-		{
-			subImporter = null;
+			subImporter = (IReqIfParserCallbackReceiver)new SpecRelationsImporter();
 		}
 		
 		private void EnteringSpecifications()
@@ -142,17 +115,12 @@ namespace EA_ReqIF_AddIn
 			subImporter = (IReqIfParserCallbackReceiver)new SpecificationsImporter(requirementsPackage);
 		}
 		
-		private void LeavingSpecifications()
-		{
-			subImporter = null;
-		}
-		
 		private void EnteringSpecRelationGroups()
 		{
-			throw new NotImplementedException();
+			subImporter = (IReqIfParserCallbackReceiver)new SpecRelationGroupsImporter();
 		}
 		
-		private void LeavingSpecRelationGroups()
+		private void LeavingSubImporter()
 		{
 			subImporter = null;
 		}
