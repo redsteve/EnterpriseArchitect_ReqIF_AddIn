@@ -69,6 +69,7 @@
     <Compile Include="DatatypesImporter.cs" />
     <Compile Include="EnterpriseArchitectModelElement.cs" />
     <Compile Include="EnterpriseArchitectModelElementFactory.cs" />
+    <Compile Include="Identifiable.cs" />
     <Compile Include="ImportExportForm.cs" />
     <Compile Include="ImportExportForm.Designer.cs">
       <DependentUpon>ImportExportForm.cs</DependentUpon>
@@ -77,6 +78,7 @@
     <Compile Include="IReqIfParserCallbackReceiver.cs" />
     <Compile Include="ParserFailureException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationGroupType.cs" />
     <Compile Include="ReqIfContentImporter.cs" />
     <Compile Include="ReqIfDocument.cs" />
     <Compile Include="ReqIfFileValidator.cs" />
@@ -85,6 +87,13 @@
     <Compile Include="RequirementsFromReqIfFileImporter.cs" />
     <Compile Include="RequirementsPackage.cs" />
     <Compile Include="SpecificationsImporter.cs" />
+    <Compile Include="SpecObjectsImporter.cs" />
+    <Compile Include="SpecObjectType.cs" />
+    <Compile Include="SpecRelationGroupsImporter.cs" />
+    <Compile Include="SpecRelationsImporter.cs" />
+    <Compile Include="SpecificationType.cs" />
+    <Compile Include="SpecRelationType.cs" />
+    <Compile Include="SpecTypesImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AboutBox.resx">
