@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Forms;
-using EA;
 
 namespace EA_ReqIF_AddIn
 {
@@ -13,16 +11,14 @@ namespace EA_ReqIF_AddIn
 	{
 		private Package requirementsPackage;
 		
+		private Hashtable specifications;
 		private Hashtable specificationTypes;
+		private Hashtable specificationObjects;
+		private Hashtable specificationRelations;
 		
-		public ReqIfContentImporter(Package requirementsPackage)
+		public ReqIfContentImporter()
 		{
-			if (requirementsPackage == null)
-			{
-				throw new ArgumentNullException();
-			}
 			
-			this.requirementsPackage = requirementsPackage;
 		}
 		
 		public override void ProcessElementStartNode(string name)
@@ -90,34 +86,38 @@ namespace EA_ReqIF_AddIn
 		
 		private void EnteringDatatypes()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new DatatypesImporter();
+			// TODO: implement import of DATATYPES.
+			subImporter = new DatatypesImporter();
 		}
 		
 		private void EnteringSpecTypes()
 		{
 			specificationTypes = new Hashtable();
-			subImporter = (IReqIfParserCallbackReceiver)new SpecTypesImporter(ref specificationTypes);
-			MessageBox.Show(specificationTypes.ToString());
+			subImporter = new SpecTypesImporter(ref specificationTypes);
 		}
 		
 		private void EnteringSpecObjects()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new SpecObjectsImporter();
+			specificationObjects = new Hashtable();
+			subImporter = new SpecObjectsImporter(ref specificationObjects);
 		}
 		
 		private void EnteringSpecRelations()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new SpecRelationsImporter();
+			specificationRelations = new Hashtable();
+			subImporter = new SpecRelationsImporter(ref specificationRelations);
 		}
 		
 		private void EnteringSpecifications()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new SpecificationsImporter(requirementsPackage);
+			specifications = new Hashtable();
+			subImporter = new SpecificationsImporter(ref specifications);
 		}
 		
 		private void EnteringSpecRelationGroups()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new SpecRelationGroupsImporter();
+			// TODO: implement import of SPEC-RELATION-GROUPS.
+			subImporter = new SpecRelationGroupsImporter();
 		}
 		
 		private void LeavingSubImporter()
