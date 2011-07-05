@@ -35,7 +35,7 @@ namespace EA_ReqIF_AddIn
 			
 			if (rootPackage == null)
 			{
-				throw new ArgumentNullException();
+				throw new ArgumentNullException("rootPackage, Class: ReqIfHeaderImporter");
 			}
 
 			createPackage(rootPackage);
