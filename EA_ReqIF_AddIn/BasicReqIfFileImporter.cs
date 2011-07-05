@@ -10,7 +10,7 @@ namespace EA_ReqIF_AddIn
 	public abstract class BasicReqIfFileImporter : IReqIfParserCallbackReceiver
 	{
 		private const string xsdDateTimeFormat = "yyyy-MM-ddThh:mm:sszzz";
-		protected const string unexpectedElementNodeError = "Unknown or unexpected element node appeared: ";
+		protected const string unexpectedElementNodeErrorText = "Unknown or unexpected element node appeared: ";
 		protected const string unexpectedTextNodeError = "Unknown or unexpected text node appeared.";
 		protected const string unexpectedAttributeError = "Unknown or unexpected attribute appeared: ";
 		
