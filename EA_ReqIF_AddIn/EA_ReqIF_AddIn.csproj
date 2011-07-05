@@ -70,6 +70,7 @@
     <Compile Include="EnterpriseArchitectModelElement.cs" />
     <Compile Include="EnterpriseArchitectModelElementFactory.cs" />
     <Compile Include="Identifiable.cs" />
+    <Compile Include="IdentifiablesImporter.cs" />
     <Compile Include="ImportExportForm.cs" />
     <Compile Include="ImportExportForm.Designer.cs">
       <DependentUpon>ImportExportForm.cs</DependentUpon>
@@ -86,9 +87,12 @@
     <Compile Include="ReqIfParser.cs" />
     <Compile Include="RequirementsFromReqIfFileImporter.cs" />
     <Compile Include="RequirementsPackage.cs" />
+    <Compile Include="Specification.cs" />
     <Compile Include="SpecificationsImporter.cs" />
+    <Compile Include="SpecObject.cs" />
     <Compile Include="SpecObjectsImporter.cs" />
     <Compile Include="SpecObjectType.cs" />
+    <Compile Include="SpecRelation.cs" />
     <Compile Include="SpecRelationGroupsImporter.cs" />
     <Compile Include="SpecRelationsImporter.cs" />
     <Compile Include="SpecificationType.cs" />
