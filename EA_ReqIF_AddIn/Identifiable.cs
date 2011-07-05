@@ -13,6 +13,7 @@ namespace EA_ReqIF_AddIn
 		private DateTime lastChange;
 		private string description;
 		
+		#region Properties
 		/// <summary>
 		/// The lifetime immutable identifier for an instance of a ReqIF element.
 		/// This field is mandatory!
@@ -48,6 +49,7 @@ namespace EA_ReqIF_AddIn
 			get { return description; }
 			set { description = value; }
 		}
+		#endregion
 		
 		#region Equals, GetHashCode and comparison operator implementation
 		public override bool Equals(object obj)
@@ -60,8 +62,8 @@ namespace EA_ReqIF_AddIn
 		
 		public bool Equals(Identifiable other)
 		{
-			// Due to a constraint that the value of identifier must be globally unique, this
-			// should be enough:
+			// Due to a constraint in the ReqIF specification that the value of
+			// an identifier must be globally unique, this should be enough:
 			return this.identifier == other.identifier;
 		}
 		
