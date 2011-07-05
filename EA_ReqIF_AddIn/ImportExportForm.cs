@@ -111,7 +111,8 @@ namespace EA_ReqIF_AddIn
 			{
 				MessageBox.Show("The following exception has occured: " +
 				                ex.GetType().ToString() + "\n" +
-				                ex.Message, "Error!", MessageBoxButtons.OK,
+				                ex.Message + "\n\nStack trace:\n\n" +
+				                ex.StackTrace.ToString(), "Error!", MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
 			}
 		}
