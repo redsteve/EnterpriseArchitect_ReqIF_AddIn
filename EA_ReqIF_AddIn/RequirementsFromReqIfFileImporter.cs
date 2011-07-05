@@ -74,11 +74,12 @@ namespace EA_ReqIF_AddIn
 		
 		private void EnteringReqIfContent()
 		{
-			subImporter = (IReqIfParserCallbackReceiver)new ReqIfContentImporter(currentPackage);
+			subImporter = (IReqIfParserCallbackReceiver)new ReqIfContentImporter();
 		}
 		
 		private void LeavingReqIfContent()
 		{
+			// TODO: interact with EA and create the model here!
 			subImporter = null;
 		}
 	}
