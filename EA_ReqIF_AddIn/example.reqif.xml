@@ -71,6 +71,13 @@
               <OBJECT>
                 <SPEC-OBJECT-REF>REQ-1</SPEC-OBJECT-REF>
               </OBJECT>
+              <CHILDREN>
+                <SPEC-HIERARCHY IDENTIFIER = "952177BF-4616-416B-A085-718FC0A1D0AD" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+                  <OBJECT>
+                    <SPEC-OBJECT-REF>REQ-2</SPEC-OBJECT-REF>
+                  </OBJECT>
+                </SPEC-HIERARCHY>
+              </CHILDREN>
             </SPEC-HIERARCHY>
           </CHILDREN>
           <TYPE>
