@@ -37,7 +37,7 @@ namespace EA_ReqIF_AddIn
 		
 		private ProcessingElement processingElement;
 		
-		public SpecRelationsImporter(ref Hashtable specificationRelations) : base(ref specificationRelations)
+		public SpecRelationsImporter(ref SortedList specificationRelations) : base(ref specificationRelations)
 		{
 			processingElement = ProcessingElement.Undefined;
 		}

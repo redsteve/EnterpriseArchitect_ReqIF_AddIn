@@ -29,7 +29,7 @@ namespace EA_ReqIF_AddIn
 		
 		private ProcessingElement processingElement;
 		
-		public SpecObjectsImporter(ref Hashtable specificationObjects) : base(ref specificationObjects)
+		public SpecObjectsImporter(ref SortedList specificationObjects) : base(ref specificationObjects)
 		{
 			processingElement = ProcessingElement.Undefined;
 		}

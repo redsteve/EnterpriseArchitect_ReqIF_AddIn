@@ -22,7 +22,7 @@ namespace EA_ReqIF_AddIn
 		/// The initialization constructor.
 		/// <param name="specificationTypes">A reference to a hashtable to take up constructed specification types.</param>
 		/// </summary>
-		public SpecTypesImporter(ref Hashtable specificationTypes) : base(ref specificationTypes)
+		public SpecTypesImporter(ref SortedList specificationTypes) : base(ref specificationTypes)
 		{
 
 		}
