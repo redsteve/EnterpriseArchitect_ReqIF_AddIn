@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace EA_ReqIF_AddIn
 {
@@ -10,6 +11,7 @@ namespace EA_ReqIF_AddIn
 	{
 		private string alternativeId;
 		private string specificationTypeIdentifier;
+		private SortedList specHierarchies;
 		
 		public string AlternativeId {
 			get { return alternativeId; }
@@ -19,6 +21,11 @@ namespace EA_ReqIF_AddIn
 		public string SpecificationTypeIdentifier {
 			get { return specificationTypeIdentifier; }
 			set { specificationTypeIdentifier = value; }
+		}
+		
+		public SortedList SpecHierarchies {
+			get { return specHierarchies; }
+			set { specHierarchies = value; }
 		}
 		
 		public Specification()
