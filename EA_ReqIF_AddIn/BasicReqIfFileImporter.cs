@@ -5,7 +5,8 @@ using EA;
 namespace EA_ReqIF_AddIn
 {
 	/// <summary>
-	/// This is the abstract base class of all concrete importer classes.
+	/// This is the abstract base class of all concrete importer classes. This class is
+	/// for inheritance only, don't create instances from it!
 	/// </summary>
 	public abstract class BasicReqIfFileImporter : IReqIfParserCallbackReceiver
 	{
@@ -15,7 +16,7 @@ namespace EA_ReqIF_AddIn
 		protected const string unexpectedAttributeError = "Unknown or unexpected attribute appeared: ";
 		
 		protected IReqIfParserCallbackReceiver subImporter;
-
+		
 		protected BasicReqIfFileImporter()
 		{
 			subImporter = null;
@@ -26,36 +27,44 @@ namespace EA_ReqIF_AddIn
 		public abstract void ProcessTextNode(string text);
 		public abstract void ProcessElementEndNode(string name);
 		
-		protected void PassElementStartNodeToSubImporter(string name)
+		protected bool PassElementStartNodeToSubImporter(string name)
 		{
-			if (subImporter != null)
+			if (HasSubImporter())
 			{
 				subImporter.ProcessElementStartNode(name);
+				return true;
 			}
+			return false;
 		}
 
-		protected void PassAttributeToSubImporter(string name, string value)
+		protected bool PassAttributeToSubImporter(string name, string value)
 		{
-			if (subImporter != null)
+			if (HasSubImporter())
 			{
 				subImporter.ProcessAttribute(name, value);
+				return true;
 			}
+			return false;
 		}
 
-		protected void PassTextNodeToSubImporter(string text)
+		protected bool PassTextNodeToSubImporter(string text)
 		{
-			if (subImporter != null)
+			if (HasSubImporter())
 			{
 				subImporter.ProcessTextNode(text);
+				return true;
 			}
+			return false;
 		}
 		
-		protected void PassElementEndNodeToSubImporter(string name)
+		protected bool PassElementEndNodeToSubImporter(string name)
 		{
-			if (subImporter != null)
+			if (HasSubImporter())
 			{
 				subImporter.ProcessElementEndNode(name);
+				return true;
 			}
+			return false;
 		}
 		
 		protected static DateTime ConvertStringifiedDateTime(string text)
@@ -93,6 +102,11 @@ namespace EA_ReqIF_AddIn
 			}
 			
 			element.TaggedValues.Refresh();
+		}
+		
+		protected bool HasSubImporter()
+		{
+			return (subImporter != null);
 		}
 	}
 }
