@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using EA;
 
 namespace EA_ReqIF_AddIn
@@ -79,8 +80,33 @@ namespace EA_ReqIF_AddIn
 		
 		private void LeavingReqIfContent()
 		{
-			// TODO: interact with EA and create the model here!
+			ReqIfContentImporter reqIfContentImporter = (ReqIfContentImporter)subImporter;
+			BuildModelFromImportedReqIfContent(reqIfContentImporter);
 			subImporter = null;
+		}
+		
+		private void BuildModelFromImportedReqIfContent(ReqIfContentImporter reqIfContentImporter)
+		{
+			if (reqIfContentImporter == null)
+				throw new ArgumentNullException("reqIfContentImporter");
+			
+			ModelBuilder modelBuilder = CreateModelBuilder(reqIfContentImporter);
+			modelBuilder.Build(currentPackage);
+		}
+
+		ModelBuilder CreateModelBuilder(ReqIfContentImporter reqIfContentImporter)
+		{
+			if (reqIfContentImporter == null)
+				throw new ArgumentNullException("reqIfContentImporter");
+			
+			ModelBuilder modelBuilder = new ModelBuilder();
+			
+			modelBuilder.SetSpecifications(reqIfContentImporter.Specifications);
+			modelBuilder.SetSpecificationTypes(reqIfContentImporter.SpecificationTypes);
+			modelBuilder.SetSpecificationObjects(reqIfContentImporter.SpecificationObjects);
+			modelBuilder.SetSpecificationRelations(reqIfContentImporter.SpecificationRelations);
+			
+			return modelBuilder;
 		}
 	}
 }
