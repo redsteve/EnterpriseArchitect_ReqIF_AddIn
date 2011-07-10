@@ -4,7 +4,7 @@ using System.Collections;
 namespace EA_ReqIF_AddIn
 {
 	/// <summary>
-	/// 
+	/// This is the abstract base class of all specialiced xxxImporter classes.
 	/// </summary>
 	public abstract class IdentifiablesImporter : BasicReqIfFileImporter
 	{
@@ -15,13 +15,13 @@ namespace EA_ReqIF_AddIn
 		private const string lastChangeAttributeName = "LAST-CHANGE";
 		#endregion
 		
-		private Hashtable identifiables;
+		private SortedList identifiables;
 		protected Identifiable identifiableElementUnderConstruction;
 		
-		public IdentifiablesImporter(ref Hashtable identifiables)
+		public IdentifiablesImporter(ref SortedList identifiables)
 		{
 			if (identifiables == null)
-				throw new ArgumentNullException("identifiables, class: IdentifiableImporter");
+				throw new ArgumentNullException("identifiables");
 			this.identifiables = identifiables;
 		}
 		
@@ -44,6 +44,10 @@ namespace EA_ReqIF_AddIn
 		
 		public override void ProcessAttribute(string name, string attribValue)
 		{
+			bool attributeWasProcessedBySubImporter = PassAttributeToSubImporter(name, attribValue);
+			if (attributeWasProcessedBySubImporter)
+				return;
+			
 			switch (name)
 			{
 				case identifierAttributeName:
@@ -61,6 +65,9 @@ namespace EA_ReqIF_AddIn
 				case lastChangeAttributeName:
 					identifiableElementUnderConstruction.LastChange = ConvertStringifiedDateTime(attribValue);
 					break;
+					
+				default:
+					throw new ParserFailureException(unexpectedAttributeError + name + "'.");
 			}
 		}
 		
