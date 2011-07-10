@@ -9,14 +9,15 @@ namespace EA_ReqIF_AddIn
 	/// </summary>
 	public class SpecificationsImporter : IdentifiablesImporter
 	{
+		#region Constants
 		private const string specificationNodeName = "SPECIFICATION";
 		private const string alternativeIdNodeName = "ALTERNATIVE-ID";
 		private const string valuesNodeName = "VALUES";
 		private const string typeNodeName = "TYPE";
 		private const string specificationTypeRefNodeName = "SPECIFICATION-TYPE-REF";
 		private const string childrenNodeName = "CHILDREN";
-		
-		private bool ignoreChildren;
+		private const string specHierarchyNodeName = "SPEC-HIERARCHY";
+		#endregion
 		
 		private enum ProcessingElement
 		{
@@ -31,24 +32,10 @@ namespace EA_ReqIF_AddIn
 		
 		private ProcessingElement processingElement;
 		
-		public SpecificationsImporter(ref Hashtable specifications) : base(ref specifications)
+		public SpecificationsImporter(ref SortedList specifications) : base(ref specifications)
 		{
-			ignoreChildren = false;
 			processingElement = ProcessingElement.Undefined;
 		}
-		
-//		private void createPackage(Package rootPackage)
-//		{
-//			EnterpriseArchitectModelElementFactory factory =
-//				new EnterpriseArchitectModelElementFactory();
-//			specificationPackage = factory.createPackage(rootPackage, "Specification");
-//			specificationPackage.Element.Author = "<imported>";
-//			specificationPackage.StereotypeEx = "Specification";
-//			if (! specificationPackage.Update())
-//			{
-//				throw new ParserFailureException(specificationPackage.GetLastError());
-//			}
-//		}
 		
 		public override void ProcessTextNode(string text)
 		{
@@ -56,13 +43,12 @@ namespace EA_ReqIF_AddIn
 			{
 				((Specification)identifiableElementUnderConstruction).SpecificationTypeIdentifier = text;
 			} else {
-				if (! ignoreChildren)
-					throw new ParserFailureException(unexpectedTextNodeError);
+				PassTextNodeToSubImporter(text);
 			}
 		}
 		
 		public override void ProcessElementStartNode(string name)
-		{
+		{		
 			switch (name)
 			{
 				case specificationNodeName:
@@ -91,15 +77,30 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				case childrenNodeName:
-					if (processingElement == ProcessingElement.Specification)
-						processingElement = ProcessingElement.Children;
-					ignoreChildren = true;
+					{
+						if (HasSubImporter())
+						{
+							SpecHierarchyImporter specHierarchySubImporter = (SpecHierarchyImporter)subImporter;
+							if (! specHierarchySubImporter.IsImportCompleted())
+								PassElementStartNodeToSubImporter(name);
+						} else {
+							if (processingElement == ProcessingElement.Specification)
+							{
+								processingElement = ProcessingElement.Children;
+								CreateSubImporterForChildElements();
+							}
+						}
+					}
 					break;
-					
+
 				default:
-					if (! ignoreChildren)
+					if (HasSubImporter())
+					{
+						PassElementStartNodeToSubImporter(name);
+						break;
+					} else {
 						throw new ParserFailureException(unexpectedElementNodeErrorText + name + "'.");
-					break;
+					}
 			}
 		}
 		
@@ -108,7 +109,11 @@ namespace EA_ReqIF_AddIn
 			switch (name)
 			{
 				case specificationNodeName:
-					FinalizeIdentifiableElementUnderConstruction();
+					if (processingElement == ProcessingElement.Specification)
+					{
+						processingElement = ProcessingElement.Undefined;
+						FinalizeIdentifiableElementUnderConstruction();
+					}
 					break;
 					
 				case alternativeIdNodeName:
@@ -132,16 +137,42 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				case childrenNodeName:
-					if (processingElement == ProcessingElement.Children)
-						processingElement = ProcessingElement.Specification;
-					ignoreChildren = false;
+					if (HasSubImporter())
+					{
+						SpecHierarchyImporter specHierarchySubImporter = (SpecHierarchyImporter)subImporter;
+						if (! specHierarchySubImporter.IsImportCompleted())
+						{
+							PassElementEndNodeToSubImporter(name);
+						} else {
+							if (processingElement == ProcessingElement.Children)
+							{
+								processingElement = ProcessingElement.Specification;
+								subImporter = null;
+							}
+						}
+					} else {
+						if (processingElement == ProcessingElement.Children)
+							processingElement = ProcessingElement.Specification;
+					}
 					break;
 					
 				default:
-					if (! ignoreChildren)
+					if (HasSubImporter())
+					{
+						PassElementEndNodeToSubImporter(name);
+						break;
+					} else {
 						throw new ParserFailureException(unexpectedElementNodeErrorText + name + "'.");
-					break;
+					}
 			}
+		}
+		
+		private void CreateSubImporterForChildElements()
+		{
+			Specification specification = ((Specification)identifiableElementUnderConstruction);
+			specification.SpecHierarchies = new SortedList();
+			SortedList nestedSpecHierarchies = specification.SpecHierarchies;
+			subImporter = new SpecHierarchyImporter(ref nestedSpecHierarchies);
 		}
 	}
 }
