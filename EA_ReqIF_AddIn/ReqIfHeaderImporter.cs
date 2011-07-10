@@ -9,6 +9,16 @@ namespace EA_ReqIF_AddIn
 	/// </summary>
 	public class ReqIfHeaderImporter : BasicReqIfFileImporter
 	{
+		#region Constants
+		private const string commentElementName = "COMMENT";
+		private const string creationTimeElementName = "CREATION-TIME";
+		private const string repositoryIdElementName = "REPOSITORY-ID";
+		private const string reqIfTollIdElementName = "REQ-IF-TOOL-ID";
+		private const string reqIfVersionElementName = "REQ-IF-VERSION";
+		private const string sourceToolIdElementName = "SOURCE-TOOL-ID";
+		private const string titleElementName = "TITLE";
+		#endregion
+		
 		private enum ProcessingElement
 		{
 			Undefined,
@@ -30,14 +40,11 @@ namespace EA_ReqIF_AddIn
 		}
 		
 		public ReqIfHeaderImporter(Package rootPackage)
-		{
-			processingElement = ProcessingElement.Undefined;
-			
+		{			
 			if (rootPackage == null)
-			{
-				throw new ArgumentNullException("rootPackage, Class: ReqIfHeaderImporter");
-			}
+				throw new ArgumentNullException("rootPackage");
 
+			processingElement = ProcessingElement.Undefined;
 			createPackage(rootPackage);
 		}
 		
@@ -58,36 +65,36 @@ namespace EA_ReqIF_AddIn
 		{
 			switch (name)
 			{
-				case "COMMENT":
+				case commentElementName:
 					processingElement = ProcessingElement.Comment;
 					break;
 					
-				case "CREATION-TIME":
+				case creationTimeElementName:
 					processingElement = ProcessingElement.CreationTime;
 					break;
 					
-				case "REPOSITORY-ID":
+				case repositoryIdElementName:
 					processingElement = ProcessingElement.RepositoryId;
 					break;
 					
-				case "REQ-IF-TOOL-ID":
+				case reqIfTollIdElementName:
 					processingElement = ProcessingElement.ReqIfToolId;
 					break;
 					
-				case "REQ-IF-VERSION":
+				case reqIfVersionElementName:
 					processingElement = ProcessingElement.ReqIfVersion;
 					break;
 					
-				case "SOURCE-TOOL-ID":
+				case sourceToolIdElementName:
 					processingElement = ProcessingElement.SourceToolId;
 					break;
 					
-				case "TITLE":
+				case titleElementName:
 					processingElement = ProcessingElement.Title;
 					break;
 					
 				default:
-					throw new ParserFailureException("Unexpected or unknown element node: " + name + ".");
+					throw new ParserFailureException(unexpectedElementNodeErrorText + name + ".");
 			}
 		}
 		
@@ -125,7 +132,7 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				default:
-					throw new ParserFailureException("Unexpected or unknown text node: " + text + ".");
+					throw new ParserFailureException(unexpectedTextNodeError + text + ".");
 			}
 			
 			if (! requirementsPackage.Update())
@@ -148,7 +155,7 @@ namespace EA_ReqIF_AddIn
 					break;
 					
 				default:
-					throw new ParserFailureException("Unexpected or unknown attribute: " + name + ".");
+					throw new ParserFailureException(unexpectedAttributeError + name + ".");
 			}
 		}
 	}
