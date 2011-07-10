@@ -9,13 +9,39 @@ namespace EA_ReqIF_AddIn
 	/// </summary>
 	public class ReqIfContentImporter : BasicReqIfFileImporter
 	{
-		private Package requirementsPackage;
+		#region Constants
+		private const string datatypesNodeName = "DATATYPES";
+		private const string specTypesNodeName = "SPEC-TYPES";
+		private const string specObjectsNodeName = "SPEC-OBJECTS";
+		private const string specRelationsNodeName = "SPEC-RELATIONS";
+		private const string specificationsNodeName = "SPECIFICATIONS";
+		private const string specRelationsGroupNodeName = "SPEC-RELATION-GROUPS";
+		#endregion
 		
-		private Hashtable specifications;
-		private Hashtable specificationTypes;
-		private Hashtable specificationObjects;
-		private Hashtable specificationRelations;
+		private SortedList specifications;
+		private SortedList specificationTypes;
+		private SortedList specificationObjects;
+		private SortedList specificationRelations;
 		
+		public SortedList Specifications {
+			get { return specifications; }
+		}
+
+		public SortedList SpecificationTypes {
+			get { return specificationTypes; }
+		}
+		
+		public SortedList SpecificationObjects {
+			get { return specificationObjects; }
+		}
+
+		public SortedList SpecificationRelations {
+			get { return specificationRelations; }
+		}
+		
+		/// <summary>
+		/// The default constructor.
+		/// </summary>
 		public ReqIfContentImporter()
 		{
 			
@@ -25,27 +51,27 @@ namespace EA_ReqIF_AddIn
 		{
 			switch (name)
 			{
-				case "DATATYPES":
+				case datatypesNodeName:
 					EnteringDatatypes();
 					break;
 					
-				case "SPEC-TYPES":
+				case specTypesNodeName:
 					EnteringSpecTypes();
 					break;
 					
-				case "SPEC-OBJECTS":
+				case specObjectsNodeName:
 					EnteringSpecObjects();
 					break;
 					
-				case "SPEC-RELATIONS":
+				case specRelationsNodeName:
 					EnteringSpecRelations();
 					break;
 					
-				case "SPECIFICATIONS":
+				case specificationsNodeName:
 					EnteringSpecifications();
 					break;
 					
-				case "SPEC-RELATION-GROUPS":
+				case specRelationsGroupNodeName:
 					EnteringSpecRelationGroups();
 					break;
 					
@@ -59,12 +85,12 @@ namespace EA_ReqIF_AddIn
 		{
 			switch (name)
 			{
-				case "DATATYPES":
-				case "SPEC-TYPES":
-				case "SPEC-OBJECTS":
-				case "SPEC-RELATIONS":
-				case "SPECIFICATIONS":
-				case "SPEC-RELATION-GROUPS":
+				case datatypesNodeName:
+				case specTypesNodeName:
+				case specObjectsNodeName:
+				case specRelationsNodeName:
+				case specificationsNodeName:
+				case specRelationsGroupNodeName:
 					LeavingSubImporter();
 					break;
 					
@@ -86,37 +112,37 @@ namespace EA_ReqIF_AddIn
 		
 		private void EnteringDatatypes()
 		{
-			// TODO: implement import of DATATYPES.
+			// UNDONE: implementation of DATATYPES import must be completed!
 			subImporter = new DatatypesImporter();
 		}
 		
 		private void EnteringSpecTypes()
 		{
-			specificationTypes = new Hashtable();
+			specificationTypes = new SortedList();
 			subImporter = new SpecTypesImporter(ref specificationTypes);
 		}
 		
 		private void EnteringSpecObjects()
 		{
-			specificationObjects = new Hashtable();
+			specificationObjects = new SortedList();
 			subImporter = new SpecObjectsImporter(ref specificationObjects);
 		}
 		
 		private void EnteringSpecRelations()
 		{
-			specificationRelations = new Hashtable();
+			specificationRelations = new SortedList();
 			subImporter = new SpecRelationsImporter(ref specificationRelations);
 		}
 		
 		private void EnteringSpecifications()
 		{
-			specifications = new Hashtable();
+			specifications = new SortedList();
 			subImporter = new SpecificationsImporter(ref specifications);
 		}
 		
 		private void EnteringSpecRelationGroups()
 		{
-			// TODO: implement import of SPEC-RELATION-GROUPS.
+			// UNDONE: implementation of SPEC-RELATION-GROUPS import must be completed!
 			subImporter = new SpecRelationGroupsImporter();
 		}
 		
