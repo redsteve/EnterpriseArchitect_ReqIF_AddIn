@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="BasicReqIfFileImporter.cs" />
     <Compile Include="DatatypesImporter.cs" />
+    <Compile Include="EnterpriseArchitectInteropFailure.cs" />
     <Compile Include="EnterpriseArchitectModelElement.cs" />
     <Compile Include="EnterpriseArchitectModelElementFactory.cs" />
     <Compile Include="Identifiable.cs" />
