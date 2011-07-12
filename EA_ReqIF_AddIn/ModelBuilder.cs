@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Windows.Forms;
 using EA;
 
 namespace EA_ReqIF_AddIn
@@ -48,21 +49,26 @@ namespace EA_ReqIF_AddIn
 		
 		private void CreateSpecificationPackages(Package rootPackage)
 		{
+			EnterpriseArchitectModelElementFactory factory = new EnterpriseArchitectModelElementFactory();
+			
 			foreach (DictionaryEntry specificationEntry in specifications)
 			{
 				Specification specification = (Specification)specificationEntry.Value;
-				Package specificationPackage = CreateSpecificationPackage(specification, rootPackage);
+				Package specificationPackage = CreateSpecificationPackage(specification, rootPackage, factory);
+				CreateRequirements(specificationPackage, specification.SpecHierarchies, factory);
 				AddTaggedValuesToSpecificationPackage(specification, specificationPackage);
 			}
 		}
-
-		private Package CreateSpecificationPackage(Specification specification, Package rootPackage)
+		
+		private Package CreateSpecificationPackage(Specification specification,
+		                                           Package rootPackage,
+		                                           EnterpriseArchitectModelElementFactory factory)
 		{
 			if ((object)specification == null)
 				throw new ArgumentNullException("specification");
-			
-			EnterpriseArchitectModelElementFactory factory = new EnterpriseArchitectModelElementFactory();
+
 			Package specificationPackage = factory.createPackage(rootPackage, specification.LongName);
+			specificationPackage.Notes = specification.Description;
 			specificationPackage.Element.Author = "<imported>";
 			specificationPackage.StereotypeEx = "Specification";
 			
@@ -72,9 +78,35 @@ namespace EA_ReqIF_AddIn
 			return specificationPackage;
 		}
 		
+		private void CreateRequirements(Package specificationPackage,
+		                                SortedList specHierarchies,
+		                                EnterpriseArchitectModelElementFactory factory)
+		{
+			if (specHierarchies.Count > 0)
+			{
+				foreach(DictionaryEntry specHierarchyEntry in specHierarchies)
+				{
+					SpecHierarchy specHierarchy = (SpecHierarchy)specHierarchyEntry.Value;
+					SpecObject specObject = (SpecObject)specificationObjects[specHierarchy.SpecObjectReference];
+					if ((object)specObject != null)
+					{
+						Element requirement = factory.CreateRequirement(specificationPackage, specObject.LongName);
+						AddTaggedValuesToRequirement(specObject, requirement);
+					} else {
+						throw new ParserFailureException();
+					}
+				}
+			}
+		}
+		
 		void AddTaggedValuesToSpecificationPackage(Specification specification, Package specificationPackage)
 		{
 			AddTaggedValueToElement(specificationPackage.Element, "identifier", "String", specification.Identifier);
+		}
+		
+		void AddTaggedValuesToRequirement(SpecObject specObject, Element requirement)
+		{
+			AddTaggedValueToElement(requirement, "identifier", "String", specObject.Identifier);
 		}
 		
 		private static void AddTaggedValueToElement(Element element, string valueName,
@@ -87,12 +119,12 @@ namespace EA_ReqIF_AddIn
 				(TaggedValue)element.TaggedValues.AddNew(valueName, valueType);
 			
 			if (taggedValue == null)
-				throw new Exception("Adding a tagged value '" + valueName + "' to an element failed.");
+				throw new EnterpriseArchitectInteropFailure("Adding a tagged value '" + valueName + "' to an element failed.");
 			
 			taggedValue.Value = value;
 			
 			if (! taggedValue.Update())
-				throw new Exception(taggedValue.GetLastError());
+				throw new EnterpriseArchitectInteropFailure(taggedValue.GetLastError());
 			
 			element.TaggedValues.Refresh();
 		}
