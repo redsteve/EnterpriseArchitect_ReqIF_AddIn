@@ -16,38 +16,36 @@ namespace EA_ReqIF_AddIn
 		
 		public Package createPackage(Package rootPackage, string packageName)
 		{
+			if (packageName == null || packageName == string.Empty)
+				packageName = "n/a";
+			
 			Package newPackage =
 				(Package)rootPackage.Packages.AddNew(packageName, "Package");
 			
 			if (newPackage == null)
-			{
-				throw new Exception("Adding a new package to another package failed.");
-			}
+				throw new EnterpriseArchitectInteropFailure("Adding a new package to another package failed.");
 			
 			if (! newPackage.Update())
-			{
-				throw new Exception(newPackage.GetLastError());
-			}
+				throw new EnterpriseArchitectInteropFailure(newPackage.GetLastError());
 			
 			return newPackage;
 		}
 		
-		public Requirement createRequirement(Package parentPackage, string requirementName)
+		public Element CreateRequirement(Package parentPackage, string requirementName)
 		{
-			Requirement requirement =
-				(Requirement)(parentPackage.Elements.AddNew(requirementName, "Requirement"));
+			if (parentPackage == null)
+				throw new ArgumentNullException("parentPackage");
 			
-			if (requirement == null)
-			{
-				throw new Exception("Adding a new requirement to a package failed.");
-			}
+			Element element =
+				(Element)(parentPackage.Elements.AddNew(requirementName, "Requirement"));
 			
-			if (! requirement.Update())
-			{
-				throw new Exception(requirement.GetLastError());
-			}
+			if (element == null)
+				throw new EnterpriseArchitectInteropFailure("Adding a new requirement to a package failed.");
 			
-			return requirement;
+			if (! element.Update())
+				throw new EnterpriseArchitectInteropFailure(element.GetLastError());
+			
+			return element;
 		}
 	}
 }
