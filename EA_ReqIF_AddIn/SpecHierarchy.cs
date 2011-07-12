@@ -20,6 +20,7 @@ namespace EA_ReqIF_AddIn
 
 		private SortedList nestedSpecHierarchies;
 		
+		#region Properties
 		public bool IsEditable {
 			get { return isEditable; }
 			set { isEditable = value; }
@@ -39,7 +40,11 @@ namespace EA_ReqIF_AddIn
 			get { return specObjectReference; }
 			set { specObjectReference = value; }
 		}
+		#endregion
 		
+		/// <summary>
+		/// The default constructor.
+		/// </summary>
 		public SpecHierarchy()
 		{
 			isEditable = true;
