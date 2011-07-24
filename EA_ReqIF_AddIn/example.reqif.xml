@@ -31,17 +31,17 @@
                 <EMBEDDED-VALUE KEY = "2" OTHER-CONTENT = "foo" />
               </PROPERTIES>
             </ENUM-VALUE>
-            <ENUM-VALUE DESC = "Requirement has been rejected." IDENTIFIER = "Rejected" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+            <ENUM-VALUE DESC = "Requirement has been rejected or de-scoped." IDENTIFIER = "Rejected" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
               <PROPERTIES>
                 <EMBEDDED-VALUE KEY = "3" OTHER-CONTENT = "foo" />
               </PROPERTIES>
             </ENUM-VALUE>
-            <ENUM-VALUE DESC = "Requirement has been satisfied by an implementation of system components." IDENTIFIER = "Satisfied" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+            <ENUM-VALUE DESC = "Requirement has been satisfied by an implementation of system components." IDENTIFIER = "Implemented" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
               <PROPERTIES>
                 <EMBEDDED-VALUE KEY = "4" OTHER-CONTENT = "foo" />
               </PROPERTIES>
             </ENUM-VALUE>
-            <ENUM-VALUE DESC = "Satisfaction of requirement has been accepted by customer or user." IDENTIFIER = "Accepted" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+            <ENUM-VALUE DESC = "Satisfaction of requirement has been approved by customer or user." IDENTIFIER = "Approved" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
               <PROPERTIES>
                 <EMBEDDED-VALUE KEY = "5" OTHER-CONTENT = "foo" />
               </PROPERTIES>
@@ -50,19 +50,24 @@
         </DATATYPE-DEFINITION-ENUMERATION>
       </DATATYPES>
       <SPEC-TYPES>
-        <SPECIFICATION-TYPE DESC = "A User Requirements Specification (a.k.a. Stakeholder Requirements Specification) specifies the requirements the user expects from the system to be constructed." IDENTIFIER = "URS" LAST-CHANGE = "2011-06-13T00:00:00+01:00" LONG-NAME = "User Requirements Specification">
+        <SPECIFICATION-TYPE DESC = "A User Requirements Specification (a.k.a. Stakeholder Requirements Specification) specifies the requirements the user expects from the system to be constructed. User Requirements are the top level of requirements. They capture the needs of users, the customer and other sources of requirements like legal regulations and internal company high level requirements." IDENTIFIER = "URS" LAST-CHANGE = "2011-06-13T00:00:00+01:00" LONG-NAME = "User Requirements Specification">
         </SPECIFICATION-TYPE>
-        <SPECIFICATION-TYPE DESC = "A System Requirements Specification." IDENTIFIER = "SRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "System Requirements Specification">
+        <SPECIFICATION-TYPE DESC = "A System Requirements Specification contains the next level of requirements after user requirements. The aim of system requirements is to set precise technical requirements for the system development. System requirements are derived from user requirements by considering existing technology, components and so on." IDENTIFIER = "SRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "System Requirements Specification">
         </SPECIFICATION-TYPE>
-        <SPECIFICATION-TYPE DESC = "A Subsystem/Components Requirements Specification." IDENTIFIER = "CRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Subsystem/Components Requirements Specification">
+        <SPECIFICATION-TYPE DESC = "A Subsystem/Components Requirements Specification contains the next level of requirements after system requirements.The aim of subsystem and component requirements is to set precise technical requirements for the development of a subsystem/component. Subsystem/component requirements are derived from system requirements by considering existing technology, components, interfaces and so on." IDENTIFIER = "CRS" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Subsystem/Components Requirements Specification">
         </SPECIFICATION-TYPE>
-        <SPEC-OBJECT-TYPE DESC = "A functional requirement describes a function of the system, i.e. what the system must do resp. the services the system provides to its user." IDENTIFIER = "FUNC-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Functional Requirement">
+        <SPEC-OBJECT-TYPE DESC = "A functional requirement describes a function of the system, i.e. what the system must do resp. a service the system provides to its users." IDENTIFIER = "FUNC-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Functional Requirement">
           <SPEC-ATTRIBUTES>
             <ATTRIBUTE-DEFINITION-STRING DESC = "The textual description of the requirement." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "FUNC-REQ-TXT">
               <TYPE>
                 <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
               </TYPE>
             </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-ENUMERATION DESC = "The status of the requirement." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "FUNC-REQ-STATUS" MULTI-VALUED = "false">
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A (user) story is a special kind of functional requirement, which uses one or more sentences in the everyday or business language of the end user that captures what the user (resp. a role) wants to achieve. User stories generally follow the following template: &quot;As a &lt;role&gt;, I want &lt;goal/desire&gt; so that &lt;benefit&gt;.&quot;" IDENTIFIER = "STORY" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "User Story">
@@ -77,13 +82,15 @@
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A usability requirement is a non-functional requirement describing the intended ease of use (ergonomical comfort) and learnability of the system." IDENTIFIER = "USABILITY-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Usability Requirement">
         </SPEC-OBJECT-TYPE>
+        <SPEC-OBJECT-TYPE DESC = "A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." IDENTIFIER = "LEGAL-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Legal Requirement">
+        </SPEC-OBJECT-TYPE>
         <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "deriveReq" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Derive Requirement Relationship">
         </SPEC-RELATION-TYPE>
         <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "refine" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Refine Relationship">
         </SPEC-RELATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
-        <SPEC-OBJECT DESC = "" IDENTIFIER = "R001" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "">
+        <SPEC-OBJECT DESC = "" IDENTIFIER = "R001" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Observe earths surface.">
           <TYPE>
             <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
           </TYPE>
@@ -93,16 +100,39 @@
                 <ATTRIBUTE-DEFINITION-STRING-REF>FUNC-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
               </DEFINITION>
             </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>FUNC-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
           </VALUES>
         </SPEC-OBJECT>
-        <SPEC-OBJECT DESC = "The system shall alert the control center if it spots a fire in a forest." IDENTIFIER = "R002" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
+        <SPEC-OBJECT DESC = "" IDENTIFIER = "R002" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Spotting fire">
            <TYPE>
              <SPEC-OBJECT-TYPE-REF>FUNC-REQ</SPEC-OBJECT-TYPE-REF>
            </TYPE>
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The system shall alert the control center if it spots a fire in a forest.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>FUNC-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>FUNC-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+          </VALUES>
         </SPEC-OBJECT>
-        <SPEC-OBJECT DESC = "The system shall be very fast." IDENTIFIER = "NFUNC-REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Another requirement">
+        <SPEC-OBJECT DESC = "The system shall be very fast." IDENTIFIER = "NFUNC-REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Fast system">
            <TYPE>
-             <SPEC-OBJECT-TYPE-REF>NFUNCREQ</SPEC-OBJECT-TYPE-REF>
+             <SPEC-OBJECT-TYPE-REF>PERF-REQ</SPEC-OBJECT-TYPE-REF>
            </TYPE>
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
