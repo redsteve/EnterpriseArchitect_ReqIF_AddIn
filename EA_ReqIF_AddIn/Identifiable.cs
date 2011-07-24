@@ -42,8 +42,10 @@ namespace EA_ReqIF_AddIn
 		}
 		
 		/// <summary>
-		/// An additional description for the ReqIF element.
-		/// This field is optional.
+		/// An additional description or comment for the ReqIF element.
+		/// This field is optional. IMPORTANT: Do not use this field to carry
+		/// the requirements text or any other user defined content. Use
+		/// AttributeValue instances instead!
 		/// </summary>
 		public string Description {
 			get { return description; }
