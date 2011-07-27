@@ -41,9 +41,28 @@
                 <EMBEDDED-VALUE KEY = "4" OTHER-CONTENT = "foo" />
               </PROPERTIES>
             </ENUM-VALUE>
-            <ENUM-VALUE DESC = "Satisfaction of requirement has been approved by customer or user." IDENTIFIER = "Approved" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+            <ENUM-VALUE DESC = "Satisfaction of requirement has been approved by QA and customer/user." IDENTIFIER = "Approved" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
               <PROPERTIES>
                 <EMBEDDED-VALUE KEY = "5" OTHER-CONTENT = "foo" />
+              </PROPERTIES>
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+        <DATATYPE-DEFINITION-ENUMERATION IDENTIFIER = "BindingForce" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE DESC = "The fulfilment of the requirement is essential, i.e. in the event of non-fulfilment the system will not satisfy stakeholder needs or will result in a deficiency that cannot be ameliorated." IDENTIFIER = "Mandatory" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY = "1" OTHER-CONTENT = "foo" />
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE DESC = "The fulfilment of the requirement should be aspired, but non-fulfilment will not result in an inacceptable deficiency." IDENTIFIER = "Worthwhile" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY = "2" OTHER-CONTENT = "foo" />
+              </PROPERTIES>
+            </ENUM-VALUE>
+            <ENUM-VALUE DESC = "The requirement is a nice-to-have one, or it has growth potential for systems future stages of expansion." IDENTIFIER = "Optional" LAST-CHANGE = "2011-06-13T00:00:00+01:00">
+              <PROPERTIES>
+                <EMBEDDED-VALUE KEY = "3" OTHER-CONTENT = "foo" />
               </PROPERTIES>
             </ENUM-VALUE>
           </SPECIFIED-VALUES>
@@ -71,8 +90,32 @@
           </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A (user) story is a special kind of functional requirement, which uses one or more sentences in the everyday or business language of the end user that captures what the user (resp. a role) wants to achieve. User stories generally follow the following template: &quot;As a &lt;role&gt;, I want &lt;goal/desire&gt; so that &lt;benefit&gt;.&quot;" IDENTIFIER = "STORY" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "User Story">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-STRING DESC = "The story." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "STORY-TXT">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-ENUMERATION DESC = "The status of the requirement." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "STORY-STATUS" MULTI-VALUED = "false">
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+          </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A performance requirement is a non-functional requirement that describes the amount of useful work accomplished by the system compared to the time and resources used." IDENTIFIER = "PERF-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Performance Requirement">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-STRING DESC = "The textual description of the performance requirement." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "PERF-REQ-TXT">
+              <TYPE>
+                <DATATYPE-DEFINITION-STRING-REF>Text</DATATYPE-DEFINITION-STRING-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-STRING>
+            <ATTRIBUTE-DEFINITION-ENUMERATION DESC = "The status of the requirement." LAST-CHANGE = "2011-06-13T10:24:18+01:00" IDENTIFIER = "PERF-REQ-STATUS" MULTI-VALUED = "false">
+              <TYPE>
+                <DATATYPE-DEFINITION-ENUMERATION-REF>Status</DATATYPE-DEFINITION-ENUMERATION-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-ENUMERATION>
+          </SPEC-ATTRIBUTES>
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A scalability requirement is a non-functional requirement that describes the ability of the system to handle growing amounts of work in a graceful manner or its ability to be enlarged to accommodate that growth." IDENTIFIER = "SCALE-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Scalability Requirement">
         </SPEC-OBJECT-TYPE>
@@ -84,9 +127,9 @@
         </SPEC-OBJECT-TYPE>
         <SPEC-OBJECT-TYPE DESC = "A legal requirement is a non-functional requirement that states a regulation that must be recognized by the system. Regulations could be laws, standards, specifications, etc." IDENTIFIER = "LEGAL-REQ" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Legal Requirement">
         </SPEC-OBJECT-TYPE>
-        <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "deriveReq" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Derive Requirement Relationship">
+        <SPEC-RELATION-TYPE DESC = "The deriveReq relationship can be used to specify when one requirement is a derivation from another requirement. This relationship expresses the relation between a particular requirement and the requirements that support this requirement." IDENTIFIER = "deriveReq" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Derive Requirement Relationship">
         </SPEC-RELATION-TYPE>
-        <SPEC-RELATION-TYPE DESC = "..." IDENTIFIER = "refine" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Refine Relationship">
+        <SPEC-RELATION-TYPE DESC = "The refine relationship can be used to specify an element that refines a requirement, i.e. the element is an increase in detail compared to the requirement." IDENTIFIER = "refine" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Refine Relationship">
         </SPEC-RELATION-TYPE>
       </SPEC-TYPES>
       <SPEC-OBJECTS>
@@ -130,14 +173,29 @@
             </ATTRIBUTE-VALUE-ENUMERATION>
           </VALUES>
         </SPEC-OBJECT>
-        <SPEC-OBJECT DESC = "The system shall be very fast." IDENTIFIER = "NFUNC-REQ-2" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Fast system">
+        <SPEC-OBJECT IDENTIFIER = "R003" LAST-CHANGE = "2011-06-13T10:24:18+01:00" LONG-NAME = "Fast system">
            <TYPE>
              <SPEC-OBJECT-TYPE-REF>PERF-REQ</SPEC-OBJECT-TYPE-REF>
            </TYPE>
+          <VALUES>
+            <ATTRIBUTE-VALUE-STRING THE-VALUE="The time span between detection of a fire and alerting of control center shall be less than 3 sec.">
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-STRING-REF>PERF-REQ-TXT</ATTRIBUTE-DEFINITION-STRING-REF>
+              </DEFINITION>
+            </ATTRIBUTE-VALUE-STRING>
+            <ATTRIBUTE-VALUE-ENUMERATION>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-ENUMERATION-REF>PERF-REQ-STATUS</ATTRIBUTE-DEFINITION-ENUMERATION-REF>
+              </DEFINITION>
+              <VALUES>
+                <ENUM-VALUE-REF>Proposed</ENUM-VALUE-REF>
+              </VALUES>
+            </ATTRIBUTE-VALUE-ENUMERATION>
+          </VALUES>
         </SPEC-OBJECT>
       </SPEC-OBJECTS>
       <SPEC-RELATIONS>
-        <SPEC-RELATION  IDENTIFIER = "CDB3C6E4-8014-4167-9D21-A8E13D98C6CA" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+        <SPEC-RELATION  IDENTIFIER = "ADB3C6E4-8014-4167-9D21-A8E13D98C6CA" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
           <SOURCE>
             <SPEC-OBJECT-REF>FUNC-REQ-1</SPEC-OBJECT-REF>
           </SOURCE>
@@ -150,7 +208,7 @@
         </SPEC-RELATION>
       </SPEC-RELATIONS>
       <SPECIFICATIONS>
-        <SPECIFICATION LONG-NAME="System X Requirements" DESC="This is the User Requirements Specification for System X of Customer Y." IDENTIFIER = "F785DE59-9D79-4DEB-9709-AACC015EF7A1" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
+        <SPECIFICATION LONG-NAME="Forest Fire Detection System" DESC="This is the User Requirements Specification for the Forest Fire Detection System of Customer Y." IDENTIFIER = "F785DE59-9D79-4DEB-9709-AACC015EF7A1" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
           <CHILDREN>
             <SPEC-HIERARCHY IDENTIFIER = "E65E8A75-F1C1-48D1-9681-8AD99E2BE6EE" LAST-CHANGE = "2011-06-13T10:24:18+01:00">
               <OBJECT>
